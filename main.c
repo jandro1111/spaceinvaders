@@ -28,7 +28,7 @@ int main(){
     //meterle un define o algo
    //initraspi();//inicializa librerias raspi
     //meterle define
-    int nivel=-1;//-1 para test
+    int nivel=1;//-1 para test
     int direccion=1;//1 derecha, 2 izquierda
     int space [LARGO][ANCHO];
     inimat(space);//inicializo la matriz
@@ -44,5 +44,5 @@ int main(){
         sleep(1);
     }while((exit = exit_cond(&vidas))!=0);
     printscore(space,puntaje);
-return 0;
+return EXIT_SUCCESS;
 }

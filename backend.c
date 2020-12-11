@@ -371,13 +371,16 @@ void navdisp(int space [][ANCHO],int *vidas,int *puntaje,int *nivel){//determina
     for(i=0;i<LARGO;++i){
         for(j=0;j<ANCHO;++j){
             if(space[i][j]==ENEMYSHOT){
-                srand(j+i+*puntaje);//no uso NULL, pq hace q todas las naves disparen al mismo tiempo
+                srand(time(NULL));
+                num =rand() %1000 + 1;
+                srand(num+j);//no uso NULL, pq hace q todas las naves disparen al mismo tiempo
                 num = rand() %100 + 1;//genero un num random entre 1 y 100
-                if(num<=40){//40% de q dispare
-                    if(space[i][j+1]==PLAYER){
+                if(num<=30){//30% de q dispare
+                    if(space[i+1][j]==PLAYER){
                         *vidas-=1;//pierde una vida
+                    }else{
+                        space[i+1][j]=ESHOT;//spawneo un disparo
                     }
-                    space[i+1][j]=ESHOT;//spawneo un disparo
                 }
             }
         }
