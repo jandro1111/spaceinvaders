@@ -34,7 +34,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 #include<unistd.h>
-int exit_cond(int *);
+void exit_cond(int *,int *);
 void inimat (int [][ANCHO] );
 void printmat (int [][ANCHO]);
 void ininiv(int[][ANCHO],int);
@@ -42,10 +42,11 @@ int ciclonaves (int [][ANCHO],int);
 void ciclodisp(int [][ANCHO],int*,int*);
 int verparams(int [][ANCHO],int);
 void navdisp(int [][ANCHO],int *,int *,int *);
-void pmov(int [][ANCHO],int *); 
+void pmov(int [][ANCHO],int *,int *,int *); 
 void matniv(int [][ANCHO]);
 void printscore(int [][ANCHO],int );
 void printnum(int [][ANCHO],int,int[]);
+void menu (int [][ANCHO]);
 #ifdef __cplusplus
 }
 #endif
