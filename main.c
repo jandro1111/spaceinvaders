@@ -60,7 +60,7 @@ int main(){
                 nivel = verparams(space,nivel);//verifica si pasaste de nivel
                 printmat(space);//reemplazar con raspi o allegro
                 sleep(1);//ver como hacer los ciclos
-                exit_cond(&vidas,&exit);
+                exit_cond(&vidas,&exit,&pausa);
                 if(exit==0){
                     break;
                 }                
@@ -75,6 +75,7 @@ int main(){
                     printmat(mataux);
                 }else{//si sali pq perdi, preparo un nuevo juego
                     printscore(space,puntaje);
+                    exit=1;
                     sleep(3);
                     vidas=3;
                     puntaje=0;

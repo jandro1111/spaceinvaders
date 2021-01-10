@@ -34,7 +34,7 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 #include<unistd.h>
-void exit_cond(int *,int *);
+void exit_cond(int *,int *,int *);
 void inimat (int [][ANCHO] );
 void printmat (int [][ANCHO]);
 void ininiv(int[][ANCHO],int);

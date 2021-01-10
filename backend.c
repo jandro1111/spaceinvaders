@@ -641,9 +641,10 @@ void printscore(int space [][ANCHO],int puntaje){//imprime el puntaje
     printmat(space);
     sleep(3);
 }
-void exit_cond(int *vidas,int *exit){//devuelve si se sale del programa o no;
+void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del programa o no;
     if(*vidas==0){
         *exit=0;
+        *pausa=0;
     }
 }
 
