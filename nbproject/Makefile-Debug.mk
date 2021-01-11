@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Allegro_Frontend.o \
 	${OBJECTDIR}/backend.o \
 	${OBJECTDIR}/main.o
 
@@ -62,6 +63,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/Allegro_Frontend.o: Allegro_Frontend.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Allegro_Frontend.o Allegro_Frontend.c
 
 ${OBJECTDIR}/backend.o: backend.c
 	${MKDIR} -p ${OBJECTDIR}
