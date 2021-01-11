@@ -6,7 +6,7 @@
 
 /* 
  * File:   backend.h
- * Author: jandro1111
+ * Author: Alejandro
  *
  * Created on 8 de diciembre de 2020, 16:01
  */

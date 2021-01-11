@@ -7,7 +7,7 @@
 
 /* 
  * File:   main.c
- * Author: mateo
+ * Author: Alejandro
  *
  * Created on December 3, 2020, 1:22 PM
  */
@@ -41,7 +41,7 @@ int main(){
     do{
         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
         printmat(space);//reemplazar con lo de allegro o raspberri
-        sleep(1);//borrar despues
+        usleep(1000000);//borrar despues
     }while(pausa==0);//menu de inicio
     inimat(space);//inicializo la matriz
     ininiv(space,nivel);

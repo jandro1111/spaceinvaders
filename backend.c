@@ -644,7 +644,7 @@ void printscore(int space [][ANCHO],int puntaje){//imprime el puntaje
 void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del programa o no;
     if(*vidas==0){
         *exit=0;
-        *pausa=0;
+        *pausa=0;//si pierdo marco como que el juego esta en pausa
     }
 }
 
