@@ -21,6 +21,7 @@
 //rand() % 10 + 1;10 rango 1 valor inicial
 int main(){
     int i,j;
+    int naves =0;//marca la cantidad de naves 
     int enpausa =0;// 0 la primera vez que ejecuta la pausa, 1 si no
     int vidas =3;
     int puntaje =0;//1000 puntos se transforman en una vida
@@ -53,14 +54,121 @@ int main(){
         do{
             while(pausa==1){//si no estoy en pausa
                 enpausa=0;//
-                direccion = ciclonaves(space,direccion);//mueve las naves enemigas
-                ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
-                pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                nivel = verparams(space,nivel);//verifica si pasaste de nivel
-                printmat(space);//reemplazar con raspi o allegro
-                sleep(1);//ver como hacer los ciclos
-                exit_cond(&vidas,&exit,&pausa);
+                switch(naves){
+                    case 1:
+                    case 2:
+                        direccion = ciclonaves(space,direccion);//mueve las naves enemigas
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                    break;
+                    case 3:
+                    case 4:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                        direccion = ciclonaves(space,direccion);//mueve las naves enemigas
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        direccion = ciclonaves(space,direccion);//mueve las naves enemigas
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        
+                    break;
+                    default://cuando hay mas de 8 naves
+                        direccion = ciclonaves(space,direccion);//mueve las naves enemigas
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        ciclodisp(space,&vidas,&puntaje);//mueve los disparos
+                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        //aca recibes los datos
+                        pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
+                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        printmat(space);//reemplazar con raspi o allegro
+                        usleep(250000);//ver como hacer los ciclos
+                        exit_cond(&vidas,&exit,&pausa);
+                        if(exit==0){
+                            break;
+                        }
+                        break;
+                }
                 if(exit==0){
                     break;
                 }                

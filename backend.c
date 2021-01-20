@@ -326,7 +326,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
         *puntaje=0;
     }
 }
-int verparams(int space[][ANCHO],int nivel){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
+int verparams(int space[][ANCHO],int nivel,int *naves){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i,j;
     int vacio =0;//1 si hay naves 0 si no
     int prom=1;//1 si tengo q promover una nave para q dispare
@@ -334,6 +334,7 @@ int verparams(int space[][ANCHO],int nivel){//se fija si pasaste al siguiente ni
         for(j=0;j<ANCHO;++j){
             if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay naves
                 vacio=1;//marco q no incremento el nivel
+                *naves+=1;
             }
         }
     }
