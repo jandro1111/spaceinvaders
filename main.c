@@ -21,6 +21,9 @@
 //rand() % 10 + 1;10 rango 1 valor inicial
 int main(){
     int i,j;
+    int numerorandom =0;
+    srand(time(NULL));//esto cambia 1 vez x segundo
+    numerorandom =rand() %10 + 1;//entonces creo esta otra variable  para poder randomizar entre segundos
     int naves =0;//marca la cantidad de naves 
     int enpausa =0;// 0 la primera vez que ejecuta la pausa, 1 si no
     int vidas =3;
@@ -59,7 +62,7 @@ int main(){
                     case 2:
                         direccion = ciclonaves(space,direccion);//mueve las naves enemigas
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -75,7 +78,7 @@ int main(){
                     case 8:
                         direccion = ciclonaves(space,direccion);//mueve las naves enemigas
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -86,7 +89,7 @@ int main(){
                             break;
                         }
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -98,7 +101,7 @@ int main(){
                         }
                         direccion = ciclonaves(space,direccion);//mueve las naves enemigas
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -109,7 +112,7 @@ int main(){
                             break;
                         }
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -124,7 +127,7 @@ int main(){
                     default://cuando hay mas de 8 naves
                         direccion = ciclonaves(space,direccion);//mueve las naves enemigas
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -135,7 +138,7 @@ int main(){
                             break;
                         }
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -146,7 +149,7 @@ int main(){
                             break;
                         }
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -157,7 +160,7 @@ int main(){
                             break;
                         }
                         ciclodisp(space,&vidas,&puntaje);//mueve los disparos
-                        navdisp(space,&vidas,&puntaje,&nivel);//hace que las naves disparen
+                        navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
                         nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
@@ -169,6 +172,7 @@ int main(){
                         }
                         break;
                 }
+                numerorandom =rand() %10 + 1;//entonces creo esta otra variable  para poder randomizar entre segundos
                 if(exit==0){
                     break;
                 }                

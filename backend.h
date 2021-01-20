@@ -41,7 +41,7 @@ void ininiv(int[][ANCHO],int);
 int ciclonaves (int [][ANCHO],int);
 void ciclodisp(int [][ANCHO],int*,int*);
 int verparams(int [][ANCHO],int,int *);
-void navdisp(int [][ANCHO],int *,int *,int *);
+void navdisp(int [][ANCHO],int *,int *,int *,int );
 void pmov(int [][ANCHO],int *,int *,int *); 
 void matniv(int [][ANCHO]);
 void printscore(int [][ANCHO],int );
