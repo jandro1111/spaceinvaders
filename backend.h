@@ -34,19 +34,19 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 #include<unistd.h>
-void exit_cond(int *,int *,int *);
-void inimat (int [][ANCHO] );
-void printmat (int [][ANCHO]);
-void ininiv(int[][ANCHO],int);
-int ciclonaves (int [][ANCHO],int);
-void ciclodisp(int [][ANCHO],int*,int*);
-int verparams(int [][ANCHO],int,int *);
-void navdisp(int [][ANCHO],int *,int *,int *,int );
-void pmov(int [][ANCHO],int *,int *,int *); 
-void matniv(int [][ANCHO]);
-void printscore(int [][ANCHO],int );
-void printnum(int [][ANCHO],int,int[]);
-void menu (int [][ANCHO]);
+void exit_cond(int *,int *,int *);//si te quedas sin vidas te lleva al menu
+void inimat (int [][ANCHO] );//inicializa la matriz en 0
+void printmat (int [][ANCHO]);//imprime la matriz (testeo)
+void ininiv(int[][ANCHO],int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
+int ciclonaves (int [][ANCHO],int);//mueve las naves enemigas
+void ciclodisp(int [][ANCHO],int*,int*);//mueve disparos del player y el enemigo
+int verparams(int [][ANCHO],int,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
+void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
+void pmov(int [][ANCHO],int *,int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
+void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
+void printscore(int [][ANCHO],int );//para raspi escribe el puntaje
+void printnum(int [][ANCHO],int,int[]);//funcion local para printscore
+void menu (int [][ANCHO]);//para raspi printea el menu
 #ifdef __cplusplus
 }
 #endif
