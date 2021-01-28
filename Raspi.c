@@ -23,32 +23,37 @@ int main(void) {
     joy_init(); //inicializa el joystick
     disp_init(); //inicializa el display
     disp_clear(); //limpia todo el display
+
     dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
     dcoord_t npos = pos; //npos es la próxima posición
     jcoord_t coord = {0, 0}; //coordenadas medidas del joystick
 
 
 
-
-    if (coord.x > THRESHOLD && npos.x < DISP_MAX_X) {
-        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-            //llamo fun der y disp
-        } else {
-            //llamo fun der
+    if (joy_get_switch() == J_NOPRESS) {
+        while (joy_get_switch() != J_NOPRESS) {
+        } //do nothing 
+    } else {
+        if (coord.x > THRESHOLD && npos.x < DISP_MAX_X) {
+            if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+                //llamo fun der y disp
+            } else {
+                //llamo fun der
+            }
         }
-    }
-    if (coord.x < -THRESHOLD && npos.x > DISP_MIN) {
-        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-            //llamo fun izq y disp
-        } else {
-            //llamo izq
+        if (coord.x < -THRESHOLD && npos.x > DISP_MIN) {
+            if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+                //llamo fun izq y disp
+            } else {
+                //llamo izq
+            }
         }
-    }
-    if (coord.y > THRESHOLD && npos.y > DISP_MIN) {
-        npos.y--;
-    }
-    if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-        npos.y++;
+        if (coord.y > THRESHOLD && npos.y > DISP_MIN) {
+            npos.y--;
+        }
+        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+            npos.y++;
+        }
     }
 
     disp_write(pos, D_OFF); //apaga la posición vieja en el buffer
@@ -56,27 +61,24 @@ int main(void) {
     pos = npos; //actualiza la posición actual
 
 
-   if(joy_get_switch() == J_NOPRESS)
-   {
-       
-   }
+
 }
 
-void raspinit (void)
-{
-	joy_init();									//inicializa el joystick
-	disp_init();									//inicializa el display
-	disp_clear();									//limpia todo el display
+void raspinit(void) {
+    joy_init(); //inicializa el joystick
+    disp_init(); //inicializa el display
+    disp_clear(); //limpia todo el display
 }
-void rasprint(int space [][ANCHO]){//es el printmat para raspi
-    int i,j;
-    for(i=0,i<ANCHO,++i){//copia el contenido de la matriz en el buffer de leds
-        for(j=0,j<ANCHO,++j){
-            if(space[i][j]>0){//si no es 0 prende el led
-                dcoord_t myPoint = {i,j};
+
+void rasprint(int space [][ANCHO]) {//es el printmat para raspi
+    int i, j;
+    for (i = 0, i < ANCHO, ++i) {//copia el contenido de la matriz en el buffer de leds
+        for (j = 0, j < ANCHO, ++j) {
+            if (space[i][j] > 0) {//si no es 0 prende el led
+                dcoord_t myPoint = {i, j};
                 disp_write(myPoint, D_ON);
-            }else{//lo apaga
-                dcoord_t myPoint = {i,j};
+            } else {//lo apaga
+                dcoord_t myPoint = {i, j};
                 disp_write(myPoint, D_ON);
             }
         }
