@@ -35,6 +35,10 @@
 
 // +ej: static void falta_envido (int);+
 
+void crear_enemigo(int, int [][ANCHO]);
+void crear_muro(int [][ANCHO]);
+    
+
 
 /*******************************************************************************
  * ROM CONST VARIABLES WITH FILE LEVEL SCOPE
@@ -65,74 +69,24 @@ void inimat(int space[][ANCHO]){ //inicializa la mat como vacia
 }
 void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la del jugador
     //harcodeo la nave del player
-    space[15][7]=PLAYER;
+    space[LARGO-1][ANCHO/2]=PLAYER;
     //
     int i,j;
-   switch(nivel){
+    switch(nivel){
        case 1:
-           for(i=1;i<4;i+=2){     
-                for(j=1;j<LARGO;j+=4){//seteo enemigos
-                    space[i][j]=ENEMY;
-                }       
-            }
-           for(i=5;i<6;++i){
-               for(j=1;j<LARGO;j+=4){
-                   space[i][j]=ENEMYSHOT;
-               }
-           }
-           for(i=13;i<15;++i){     
-                for(j=1;j<LARGO;j+=3){//seteo defensas
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                }       
-            }
+           crear_enemigo(nivel,space);
+           crear_muro(space);
            break;
        case 2:
-           for(i=1;i<6;i+=2){     
-                for(j=1;j<LARGO;j+=4){//seteo enemigos
-                    space[i][j]=ENEMY;
-                }       
-            }
-           for(i=7;i<8;++i){
-               for(j=1;j<LARGO;j+=4){
-                   space[i][j]=ENEMYSHOT;
-               }
-           }
-           for(i=13;i<15;++i){     
-                for(j=1;j<LARGO;j+=3){//seteo defensas
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                }       
-            }
+           crear_enemigo(nivel,space);
+           crear_muro(space);
+           
            break;
        case 3:
-            for(i=1;i<6;i+=2){     
-                for(j=1;j<LARGO;j+=3){//seteo enemigos
-                    space[i][j]=ENEMY;
-                }       
-            }
-            for(i=7;i<8;++i){
-               for(j=1;j<LARGO;j+=3){
-                   space[i][j]=ENEMYSHOT;
-               }
-           }
-            for(i=13;i<15;++i){     
-                for(j=1;j<LARGO;j+=3){//seteo defensas
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                }       
-            }
+            crear_enemigo(nivel,space);
+            crear_muro(space);
            break;
-       case -1://testeo
+       case -1://PARA TESTEAR :)
            /* space[3][7]=ENEMYSHOT;
             space[11][15]=PSHOT;
            for(i=13;i<15;++i){
@@ -146,29 +100,13 @@ void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la d
             }*/
            break;
         default:
-            for(i=1;i<8;i+=2){     
-                for(j=1;j<LARGO;j+=3){//seteo enemigos
-                    space[i][j]=ENEMY;
-                }       
-            }
-            for(i=7;i<8;++i){
-               for(j=1;j<LARGO;j+=3){
-                   space[i][j]=ENEMYSHOT;
-               }
-           }
-            for(i=13;i<15;++i){     
-                for(j=1;j<LARGO;j+=3){//seteo defensas
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                    ++j;
-                    space[i][j]=MURO;
-                }       
-            }
+           crear_enemigo(nivel,space);
+           crear_muro(space);
            break;
                
    } 
 }
+
 int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la matriz
     int i=0;
     int j=0;
@@ -296,8 +234,8 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
                         space[i-1][j]=space[i][j];//muevo el disp
                         space[i][j]=0;//borro la anterior posicion del disp
                     }else{//hay algo
-                        if((space[i-1][j]==ENEMY)||(space[i-1][j]==ENEMYSHOT)||(space[i-1][j]==NAVNOD)){//si es enemigo cambiar si se agregan mas tipos de nemigos
-                            *puntaje+=((space[i-1][j])*5);
+                        if((space[i-1][j]==ENEMY)||(space[i-1][j]==ENEMYSHOT)||(space[i-1][j]==NAVNOD)||(space[i-1][j]==ENEMY_2)||(space[i-1][j]==ENEMY_3)){//si es enemigo cambiar si se agregan mas tipos de nemigos
+                            *puntaje+=((space[i-1][j])*10);
                             if(space[i-1][j]==NAVNOD){//si es la nave nod
                                 if(space[i-1][j-1]==NAVNOD){//me fijo donde esta la otra parte de la nave nod
                                     space[i][j]=0;
@@ -326,7 +264,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
         *puntaje=0;
     }
 }
-int verparams(int space[][ANCHO],int nivel,int *naves){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
+int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i,j;
     *naves=0;//pongo que hay 0 naves
     int vacio =0;//1 si hay naves 0 si no
@@ -355,9 +293,10 @@ int verparams(int space[][ANCHO],int nivel,int *naves){//se fija si pasaste al s
             if(space[j][i]==ENEMYSHOT){//si hay un enemigo q dispara en esa col
                 prom=0;//no necesito promover a otro para q dispare
             }
-            if(space[j][i]==ENEMY){//cambiar si agrego mas tipos de enemigos
+            if( (space[j][i]==ENEMY) || (space[j][i]==ENEMY_2) || (space[j][i]==ENEMY_3)){//cambiar si agrego mas tipos de enemigos
                 if(prom==1){//si no encontre ninguna nave q dispara antes q esta
-                    space[j][i]=ENEMYSHOT; //promuevo esa nave para q dispare
+                    *puntaje-=(ENEMYSHOT-space[i][j])*10;
+                    space[j][i]=ENEMYSHOT; //promuevo esa nave para q dispare                    
                     prom=0;//ya no necesito promover otra
                 }
             }
@@ -766,3 +705,53 @@ void menu(int space[][ANCHO]){//para allegro hacer otra cosa, escribe el simbolo
     //y como arranco con ops en 0 
     space[5][0]=space[5][1]=1;//escribo el puntero
 }
+void crear_enemigo(int nivel,int space[][ANCHO]) 
+{
+    int i,j,p;
+    if(nivel > 5){ // limita la cantidad de niveles a 5 para evitar desbordamientos del stack
+        p=nivel;
+        nivel=5;
+    }
+    
+    for(i=nivel;i<(nivel+3);i+=2){     
+                for(j=1;j<LARGO;j+=SEP_RASP){//seteo enemigos
+                    if(i==nivel){
+                        space[i][j]=ENEMY_3;
+                    }
+                    else
+                    {
+                        if(i==(nivel+2))
+                        {
+                            if(nivel>2){
+                                space[i][j]=ENEMY_2;
+                            }
+                            else{
+                                space[i][j]=ENEMY;
+                            }                                
+                        }                       
+                    }
+                }       
+            }
+           for(i=(nivel+4);i<(nivel+5);++i){
+               for(j=1;j<LARGO;j+=SEP_RASP){
+                   space[i][j]=ENEMYSHOT;
+               }
+           }
+    nivel=p; // conservo el valor original del nivel
+   
+}
+void crear_muro(int space[][ANCHO])
+{
+    int i,j;
+    for(i=13;i<15;++i){     
+                for(j=1;j<LARGO;j+=3){//seteo defensas
+                    space[i][j]=MURO;
+                    ++j;
+                    space[i][j]=MURO;
+                    ++j;
+                    space[i][j]=MURO;
+                }       
+            }
+    
+}
+
