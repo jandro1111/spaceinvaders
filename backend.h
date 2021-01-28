@@ -17,7 +17,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
+#define RASPI
 #ifdef RASPI  
 #define LARGO 16 //el largo de la matriz
 #define ANCHO 16
@@ -25,9 +25,12 @@ extern "C" {
 #define LARGO 98 //el largo de la matriz
 #define ANCHO 49
 #endif
-    
-#define ENEMY 1//despues agrego mas tipos de naves
-#define ENEMYSHOT 2//tipos de naves entre 1 a 5 el 2 es el q dispara
+#define SEP_AL 9 // Separacion entre enemegios por fila para allegro
+#define SEP_RASP 4 // Separacion entre enemigos por fila en raspi
+#define ENEMY 1 //despues agrego mas tipos de naves
+#define ENEMY_2 2 
+#define ENEMY_3 3
+#define ENEMYSHOT 4//tipos de naves entre 1 a 5 el 2 es el q dispara
 #define NAVNOD 5//siempre se mueve de izq a der, ocupa 2 bloques
 #define PSHOT 7   
 #define ESHOT 6
@@ -46,7 +49,7 @@ void printmat (int [][ANCHO]);//imprime la matriz (testeo)
 void ininiv(int[][ANCHO],int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
 int ciclonaves (int [][ANCHO],int);//mueve las naves enemigas
 void ciclodisp(int [][ANCHO],int*,int*);//mueve disparos del player y el enemigo
-int verparams(int [][ANCHO],int,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
+int verparams(int [][ANCHO],int,int *,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
 void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
 void pmov(int [][ANCHO],int *,int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
 void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
