@@ -65,7 +65,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -81,7 +81,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -92,7 +92,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -104,7 +104,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -115,7 +115,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -130,7 +130,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -141,7 +141,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -152,7 +152,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
@@ -163,7 +163,7 @@ int main(){
                         navdisp(space,&vidas,&puntaje,&nivel,numerorandom);//hace que las naves disparen
                         //aca recibes los datos
                         pmov(space,&puntaje,&pausa,&ops);//mueve y dispara el jugador
-                        nivel = verparams(space,nivel,&naves);//verifica si pasaste de nivel
+                        nivel = verparams(space,nivel,&naves,&puntaje);//verifica si pasaste de nivel
                         printmat(space);//reemplazar con raspi o allegro
                         usleep(250000);//ver como hacer los ciclos
                         exit_cond(&vidas,&exit,&pausa);
