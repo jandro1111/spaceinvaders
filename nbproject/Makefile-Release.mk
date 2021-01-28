@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Allegro_Frontend.o \
+	${OBJECTDIR}/Raspi.o \
 	${OBJECTDIR}/backend.o \
 	${OBJECTDIR}/main.o
 
@@ -68,6 +69,11 @@ ${OBJECTDIR}/Allegro_Frontend.o: Allegro_Frontend.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Allegro_Frontend.o Allegro_Frontend.c
+
+${OBJECTDIR}/Raspi.o: Raspi.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Raspi.o Raspi.c
 
 ${OBJECTDIR}/backend.o: backend.c
 	${MKDIR} -p ${OBJECTDIR}

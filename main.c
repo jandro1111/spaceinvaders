@@ -177,7 +177,7 @@ int main(){
                     break;
                 }                
             }//puede salir x dos opciones, pausa o que perdiste, las dos te llevan al mismo menu, pero en pausa usas una mat auxil para guardar el estado del juego
-            if(enpausa==0){//si recien me pongo en pausa    
+            if(enpausa==0){//si recien salio del juego   
                 if(vidas>0){//si sali pq pause
                     for(i=0;i<LARGO;++i){
                         for(j=0;j<ANCHO;++j){
