@@ -17,9 +17,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#define RASPI //para testeo, meter en un makefile despues
+    
+#ifdef RASPI  
 #define LARGO 16 //el largo de la matriz
 #define ANCHO 16
+#else 
+#define LARGO 98 //el largo de la matriz
+#define ANCHO 49
+#endif
+    
 #define ENEMY 1//despues agrego mas tipos de naves
 #define ENEMYSHOT 2//tipos de naves entre 1 a 5 el 2 es el q dispara
 #define NAVNOD 5//siempre se mueve de izq a der, ocupa 2 bloques
