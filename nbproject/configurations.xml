@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>backend.h</itemPath>
+      <itemPath>raspi.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -15,9 +17,7 @@
       <itemPath>Allegro_Frontend.c</itemPath>
       <itemPath>Raspi.c</itemPath>
       <itemPath>backend.c</itemPath>
-      <itemPath>backend.h</itemPath>
       <itemPath>main.c</itemPath>
-      <itemPath>raspi.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"

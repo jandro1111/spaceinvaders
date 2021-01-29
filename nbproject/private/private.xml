@@ -9,8 +9,10 @@
         <group>
             <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/backend.h</file>
             <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/Allegro_Frontend.c</file>
+            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/raspi.h</file>
             <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/backend.c</file>
             <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/main.c</file>
+            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/Raspi.c</file>
         </group>
     </open-files>
 </project-private>

@@ -15,11 +15,16 @@
 
 
 #include"backend.h"
-
+#include"raspi.h"
 
 // uso srand(time(NULL)) para incializar
 //rand() % 10 + 1;10 rango 1 valor inicial
-int main(){
+
+
+//ESTO QUEDA ACA PARA DESPUES METER EN EL FRONTEND DE RASPI
+
+
+/*int main(){
     int i,j;
     int numerorandom =0;
     srand(time(NULL));//esto cambia 1 vez x segundo
@@ -223,3 +228,4 @@ int main(){
     
 return EXIT_SUCCESS;
 }
+ */

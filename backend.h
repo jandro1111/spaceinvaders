@@ -53,9 +53,7 @@ int verparams(int [][ANCHO],int,int *,int *);//se fija si pasaste de nivel, camb
 void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
 void pmov(int [][ANCHO],int *,int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
 void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
-void printscore(int [][ANCHO],int );//para raspi escribe el puntaje
-void printnum(int [][ANCHO],int,int[]);//funcion local para printscore
-void menu (int [][ANCHO]);//para raspi printea el menu
+
 #ifdef __cplusplus
 }
 #endif
