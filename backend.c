@@ -35,8 +35,8 @@
 
 // +ej: static void falta_envido (int);+
 
-void crear_enemigo(int, int [][ANCHO]);
-void crear_muro(int [][ANCHO]);
+void crear_enemigo(int);
+void crear_muro(void);
     
 
 
@@ -51,7 +51,7 @@ void crear_muro(int [][ANCHO]);
  * STATIC VARIABLES AND CONST VARIABLES WITH FILE LEVEL SCOPE
  ******************************************************************************/
 
-// +ej: static int temperaturas_actuales[4];+
+static int space[LARGO][ANCHO];
 
 
 /*******************************************************************************
@@ -59,7 +59,7 @@ void crear_muro(int [][ANCHO]);
                         GLOBAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-void inimat(int space[][ANCHO]){ //inicializa la mat como vacia
+void inimat(void){ //inicializa la mat como vacia
     int i=0, j=0;
     for(i=0;i<LARGO;++i){     
         for(j=0;j<ANCHO;++j){
@@ -68,24 +68,24 @@ void inimat(int space[][ANCHO]){ //inicializa la mat como vacia
     }
 }
 /////////////////////////////////////////////////////////////////////
-void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la del jugador
+void ininiv(int nivel){//inicializa las naves enemigas y la del jugador
     //harcodeo la nave del player
     space[LARGO-1][ANCHO/2]=PLAYER;
     //
     int i,j;
     switch(nivel){
        case 1:
-           crear_enemigo(nivel,space);
-           crear_muro(space);
+           crear_enemigo(nivel);
+           crear_muro();
            break;
        case 2:
-           crear_enemigo(nivel,space);
-           crear_muro(space);
+           crear_enemigo(nivel);
+           crear_muro();
            
            break;
        case 3:
-            crear_enemigo(nivel,space);
-            crear_muro(space);
+            crear_enemigo(nivel);
+            crear_muro();
            break;
        case -1://PARA TESTEAR :)
            /* space[3][7]=ENEMYSHOT;
@@ -101,14 +101,14 @@ void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la d
             }*/
            break;
         default:
-           crear_enemigo(nivel,space);
-           crear_muro(space);
+           crear_enemigo(nivel);
+           crear_muro();
            break;
                
    } 
 }
 ///////////////////////////////////////////////////////////////////////////////////
-int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la matriz
+int ciclonaves (int direccion){//mueva las naves en la matriz
     int i=0;
     int j=0;
     int mov;
@@ -139,7 +139,7 @@ int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la m
             for(i=(LARGO-2);i>=0;--i){
                 for(j=(ANCHO-1);j>=0;--j){ 
                     if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
-                        movmat(space,i,j,mov);   
+                        movmat(i,j,mov);   
                     }
                 }
             }
@@ -148,7 +148,7 @@ int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la m
             for(i=(LARGO-2);i>=0;--i){
                 for(j=0;j<ANCHO;++j){
                     if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                       
-                        movmat(space,i,j,mov);
+                        movmat(i,j,mov);
                     }
                 }
             }
@@ -158,7 +158,7 @@ int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la m
         for(i=(LARGO-2);i>=0;--i){
             for(j=0;j<ANCHO;++j){
                 if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                           
-                    movmat(space,i,j,mov);                         
+                    movmat(i,j,mov);                         
                 }
             }
         }
@@ -166,7 +166,7 @@ int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la m
     return direccion;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
-void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
+void nav_nod(void){    //spawnea nave nod y mueve nave nod
     int i,j,haynavenod,num;
     int mov=DER;
     for(j=0;j<ANCHO;++j){//me fijo si hay una nave nod en juego
@@ -191,14 +191,14 @@ void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
                     space[i][j-1]=0;
                     space[i][j]=0;
                 }else{
-                    movmat(space,i,j,mov);
+                    movmat(i,j,mov);
                 }   
             }
         }
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los disparos y cambia puntaje y vidas
+void ciclodisp (int *vidas,int *puntaje){//mueve los disparos y cambia puntaje y vidas
     int i,j,mov;
     for(i=(LARGO-1);i>=0;--i){
         for(j=(ANCHO-1);j>=0;--j){
@@ -208,7 +208,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
                     space[i][j]=0;
                 }else{//si estoy en otra fila
                     if(space[i+1][j]==0){//si adelante del disparo no hay nada
-                        movmat(space,i,j,mov);
+                        movmat(i,j,mov);
                     }else{//hay algo
                         if(space[i+1][j]==PLAYER){//si es el jugador
                             space[i][j]=0;
@@ -230,7 +230,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
                     space[i][j]=0;
                 }else{
                     if(space[i-1][j]==0){//si adelante del disparo no hay nada
-                        movmat(space,i,j,mov);
+                        movmat(i,j,mov);
                     }else{//hay algo
                         if((space[i-1][j]==ENEMY)||(space[i-1][j]==ENEMYSHOT)||(space[i-1][j]==NAVNOD)||(space[i-1][j]==ENEMY_2)||(space[i-1][j]==ENEMY_3)){//si es enemigo cambiar si se agregan mas tipos de nemigos
                             *puntaje+=((space[i-1][j])*10);
@@ -263,7 +263,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////
-int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
+int verparams(int nivel,int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i,j;
     *naves=0;//pongo que hay 0 naves
     int vacio =0;//1 si hay naves 0 si no
@@ -279,12 +279,12 @@ int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si
     if(vacio==0){//si no hay mas naves
         ++nivel;//subo de nivel
 #ifdef RASPI       
-        matniv(space);//lv up , SOLO PARA RASPI, hacer de otra forma en allegro
-        printmat(space);
+        matniv();//lv up , SOLO PARA RASPI, hacer de otra forma en allegro
+        printmat();
         sleep(3);
 #endif
-        inimat(space);//borro el mundo
-        ininiv(space,nivel);//cargo el nuevo nivel
+        inimat();//borro el mundo
+        ininiv(nivel);//cargo el nuevo nivel
     }
     //ojo aca q me manejo con cols primero y despues fils
     for(i=0;i<ANCHO;++i){
@@ -305,7 +305,7 @@ int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si
     return nivel;
 }
 //////////////////////////////////////////////////////////////////////////////
-void navdisp(int space [][ANCHO],int *vidas,int *puntaje,int *nivel,int numrandom){//determina cuando las naves disparan y cuando aparece la nave nodriza
+void navdisp(int *vidas,int *puntaje,int *nivel,int numrandom){//determina cuando las naves disparan y cuando aparece la nave nodriza
     int i,j;
     int haynavenod=0;//1 para si
     int num=0;//numero random
@@ -327,7 +327,7 @@ void navdisp(int space [][ANCHO],int *vidas,int *puntaje,int *nivel,int numrando
     }   
 }
 /////////////////////////////////////////////////////////////////////////////////////
-void pmov(int space [][ANCHO],int *puntaje,int *ops){//movimiento y disparo del jugador
+void pmov(int *puntaje,int *ops){//movimiento y disparo del jugador
     int disparo=0;//1 si hay diapro ya en juego
     int i,j;
     int mov=0;//determina q hace, para testeo, borrar despues 
@@ -493,7 +493,7 @@ void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del progra
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
-void printmat(int space[][ANCHO]){//para testeo
+void printmat(void){//para testeo
     int m=0;
     int n=0;
     for(m=0;m<LARGO;++m){     /*mientras el contador de filas sea distinto a la cant. de filas, me fijo en las columnas*/
@@ -505,7 +505,7 @@ void printmat(int space[][ANCHO]){//para testeo
     printf("\n");
 }
 /////////////////////////////////////////////////////////////////////////////
-void crear_enemigo(int nivel,int space[][ANCHO]) 
+void crear_enemigo(int nivel) 
 {
     int i,j,p;
     if(nivel > 5){ // limita la cantidad de niveles a 5 para evitar desbordamientos del stack
@@ -538,7 +538,7 @@ void crear_enemigo(int nivel,int space[][ANCHO])
    
 }
 /////////////////////////////////////////////////////////////////////////////
-void crear_muro(int space[][ANCHO])
+void crear_muro(void)
 {
     int i,j;
     for(i=13;i<15;++i){     
@@ -553,7 +553,7 @@ void crear_muro(int space[][ANCHO])
     
 }
 //////////////////////////////////////////////////////////////////////////////
-void movmat(int space [][ANCHO],int largo,int ancho,int mov){//mueve elementos de la matriz a izquierda derecha arriba o abajo
+void movmat(int largo,int ancho,int mov){//mueve elementos de la matriz a izquierda derecha arriba o abajo
     switch(mov){
         case DER:
            space[largo][ancho+1]=space[largo][ancho];//muevo lo que haya ahi
@@ -577,3 +577,170 @@ void movmat(int space [][ANCHO],int largo,int ancho,int mov){//mueve elementos d
                 
     }
 }
+int getmat(int i,int j){
+    int dato;
+    return dato=space[i][j];
+}
+//////////////////////////////////////////////////////////////////
+#ifdef RASPI
+void matniv(void){// escribe LV UP
+    int i=0;
+    for(i=4;i<8;++i){
+        switch(i){
+            case 4:
+                space[i][1]=space[i][5]=space[i][7]=space[i][9]=space[i][11]=space[i][13]=space[i][14]=1;
+                break;
+            case 5:
+                space[i][1]=space[i][5]=space[i][7]=space[i][9]=space[i][11]=space[i][13]=space[i][15]=1;
+                break;
+            case 6:
+                space[i][1]=space[i][5]=space[i][7]=space[i][9]=space[i][11]=space[i][13]=space[i][14]=1;
+                break;
+            case 7:
+                space[i][1]=space[i][2]=space[i][3]=space[i][6]=space[i][9]=space[i][10]=space[i][11]=space[i][13]=1;
+                break;
+            default:
+                break;
+        }
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+void printnum(int num,int digit[]){//imprimi un digito en la pos correspondiente
+    int a,b,c,d;
+    a=digit[0];
+    b=digit[1];
+    c=digit[2];
+    d=digit[3];
+    switch(num){
+        case 0://escribo 0
+            space[10][a]=space[11][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            space[10][c]=space[11][c]=space[12][c]=space[13][c]=space[14][c]=1;
+            space[10][b]=space[14][b]=1;
+            break;
+        case 1://escribo 1
+            space[10][a]=space[11][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            break;
+        case 2://escribo 2
+            space[11][a]=space[14][a]=1;
+            space[10][b]=space[12][b]=space[14][b]=1;
+            space[10][c]=space[13][c]=space[14][c]=1;
+            space[11][d]=space[14][d]=1;
+            break;
+        case 3://escribo 3
+            space[10][a]=space[11][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            space[10][b]=space[12][b]=space[14][b]=1;
+            space[10][c]=space[12][c]=space[14][c]=1;
+            space[10][d]=space[12][d]=space[14][d]=1;
+            break;
+        case 4://escribo 4
+            space[10][a]=space[11][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            space[11][b]=1;
+            space[10][c]=space[11][c]=1;
+            break;
+        case 5://escribo 5
+            space[10][a]=space[13][a]=1;
+            space[10][b]=space[12][b]=space[14][b]=1;
+            space[10][c]=space[12][c]=space[14][c]=1;
+            space[10][d]=space[11][d]=space[14][d]=1;
+            break;
+        case 6://escribo 6
+            space[10][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            space[10][b]=space[12][b]=space[14][b]=1;
+            space[10][c]=space[11][c]=space[12][c]=space[13][c]=space[14][c]=1;
+            break;
+        case 7://escribo 7
+            space[12][a]=1;
+            space[10][b]=space[11][b]=space[12][b]=space[13][b]=space[14][b]=1;
+            space[10][c]=space[12][c]=1;
+            space[10][d]=1;
+            break;
+        case 8://escribo 8
+            space[10][a]=space[11][a]=space[13][a]=space[14][a]=1;
+            space[10][b]=space[12][b]=space[14][b]=1;
+            space[10][c]=space[11][c]=space[13][c]=space[14][c]=1;
+            break;
+        case 9://escribo 9
+            space[10][a]=space[11][a]=space[12][a]=space[13][a]=space[14][a]=1;
+            space[10][b]=space[12][b]=1;
+            space[10][c]=space[11][c]=space[12][c]=1;
+            break;
+        default:
+            break;
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+void menu(void){//para allegro hacer otra cosa, escribe el simbolo de play o end
+    space[3][6]=1;
+    space[4][6]=space[4][7]=1;
+    space[5][6]=space[5][7]=space[5][8]=1;
+    space[6][6]=space[6][7]=1;
+    space[7][6]=1;
+    //escribe END
+    space[10][4]=space[10][5]=space[10][6]=1;
+    space[11][4]=space[11][8]=space[11][11]=space[11][13]=space[11][14]=1;
+    space[12][4]=space[12][5]=space[12][6]=space[12][8]=space[12][9]=space[12][11]=space[12][13]=space[12][15]=1;
+    space[13][4]=space[13][8]=space[13][10]=space[13][11]=space[13][13]=space[13][15]=1;
+    space[14][4]=space[14][5]=space[14][6]=space[14][8]=space[14][11]=space[14][13]=space[14][14]=1;
+    //y como arranco con ops en 0 
+    space[5][0]=space[5][1]=1;//escribo el puntero
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+void printscore(int puntaje){//imprime el puntaje
+    int num=0;//aisla digitos para pasar a matriz
+    inimat();
+    int auxmat [4];//para determinar que cols usar degun el digito
+    int i;
+    for(i=4;i<=8;++i){
+        switch(i){//escribe PTS
+            case 4:
+                space[i][1]=space[i][2]=space[i][6]=space[i][5]=space[i][7]=space[i][10]=space[i][11]=space[i][12]=1;
+                break;
+            case 5:
+                space[i][1]=space[i][3]=space[i][6]=space[i][9]=1;
+                break;
+            case 6:
+                space[i][1]=space[i][2]=space[i][6]=space[i][10]=space[i][11]=1;
+                break;
+            case 7:
+                space[i][1]=space[i][6]=space[i][12]=1;
+                break;
+            case 8:
+                space[i][1]=space[i][6]=space[i][9]=space[i][10]=space[i][11]=1;
+                break;                
+            default:
+                break;
+        }
+    }
+    for(i=0;i<3;++i){//pasa digit de der a izq 3 digitos
+        num=(puntaje%10);
+        puntaje=(puntaje/10);
+        switch(i){
+            case 0:
+                auxmat[0]=15;
+                auxmat[1]=14;
+                auxmat[2]=13;
+                auxmat[3]=12;
+                printnum(num,auxmat);
+                break;
+            case 1:
+                auxmat[0]=9;
+                auxmat[1]=8;
+                auxmat[2]=7;
+                auxmat[3]=6;
+                printnum(num,auxmat);
+                break;
+            case 2:
+                auxmat[0]=3;
+                auxmat[1]=2;
+                auxmat[2]=1;
+                auxmat[3]=0;
+                printnum(num,auxmat);
+                break;
+            default:
+                break;
+        }
+    }
+    printmat();
+    sleep(3);
+}
+#endif

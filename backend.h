@@ -46,17 +46,21 @@ extern "C" {
 #include <stdint.h>
 #include<unistd.h>
 void exit_cond(int *,int *,int *);//si te quedas sin vidas te lleva al menu
-void inimat (int [][ANCHO] );//inicializa la matriz en 0
-void printmat (int [][ANCHO]);//imprime la matriz (testeo)
-void ininiv(int[][ANCHO],int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
-int ciclonaves (int [][ANCHO],int);//mueve las naves enemigas
-void ciclodisp(int [][ANCHO],int*,int*);//mueve disparos del player y el enemigo
-int verparams(int [][ANCHO],int,int *,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
-void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
-void pmov(int [][ANCHO],int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
-void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
-void nav_nod (int[][ANCHO]);//spawnea y mueve nave nod
-void movmat (int [][ANCHO],int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
+void inimat (void);//inicializa la matriz en 0
+void printmat (void);//imprime la matriz (testeo)
+void ininiv(int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
+int ciclonaves (int);//mueve las naves enemigas
+void ciclodisp(int*,int*);//mueve disparos del player y el enemigo
+int verparams(int,int *,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
+void navdisp(int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
+void pmov(int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
+void matniv(void);//para raspi, esccribe level up en la matriz
+void nav_nod (void);//spawnea y mueve nave nod
+void movmat (int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
+int getmat(int,int);//te dice que hay en esas coords de la matriz
+void printscore(int );//para raspi escribe el puntaje
+void printnum(int,int[]);//funcion local para printscore
+void menu (void);//para raspi printea el menu
 #ifdef __cplusplus
 }
 #endif
