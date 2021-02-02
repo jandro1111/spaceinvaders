@@ -71,24 +71,10 @@ void inimat(void){ //inicializa la mat como vacia
 void ininiv(int nivel){//inicializa las naves enemigas y la del jugador
     //harcodeo la nave del player
     space[LARGO-1][ANCHO/2]=PLAYER;
-    //
-    int i,j;
-    switch(nivel){
-       case 1:
            crear_enemigo(nivel);
            crear_muro();
-           break;
-       case 2:
-           crear_enemigo(nivel);
-           crear_muro();
-           
-           break;
-       case 3:
-            crear_enemigo(nivel);
-            crear_muro();
-           break;
-       case -1://PARA TESTEAR :)
-           /* space[3][7]=ENEMYSHOT;
+       /*case -1://PARA TESTEAR :)
+            space[3][7]=ENEMYSHOT;
             space[11][15]=PSHOT;
            for(i=13;i<15;++i){
                 for(j=1;j<LARGO;j+=3){//seteo defensas
@@ -98,48 +84,25 @@ void ininiv(int nivel){//inicializa las naves enemigas y la del jugador
                     ++j;
                     space[i][j]=MURO;
                 }       
-            }*/
-           break;
-        default:
-           crear_enemigo(nivel);
-           crear_muro();
-           break;
-               
-   } 
+            }*/ 
 }
 ///////////////////////////////////////////////////////////////////////////////////
-int ciclonaves (int direccion){//mueva las naves en la matriz
-    int i=0;
-    int j=0;
-    int mov;
-    int bajar=0;//defino si bajo o no 1 para si
-    if(direccion==DER){//si va para la derecha me fijo la col de la derecha
-        for(i=0;i<LARGO;++i){
-            if((space[i][ANCHO-1]>=1)&&(space[i][ANCHO-1]<=4)){//si hay algo en la ultima col
-                direccion=IZQ;//invierto direccion
-                bajar=1;//indico q tengo q bajar
-            }
-        }
-    }else{//me fijo en la col de la izquierda
-        for(i=0;i<LARGO;++i){//si va para la izq
-            if((space[i][0]>=1)&&(space[i][0]<=4)){//si hay algo en la primer col
-                direccion=DER;//invuerto direccion
-                bajar=1;//indico q tengo q bajar
-            }
-        }
-    }
-    for(i=(LARGO-2),j=0;j<ANCHO;++j){//verifico la penultima fil
-        if((space[i][j]>=1)&&(space[i][j]<=4)){//si hay naves en la penultima fil no bajo
-            bajar=0;
-        }
-    }
+int ciclonaves (void){//mueva las naves en la matriz
+    int mov,i,j;
+    int exit=0;
+    static int direccion =DER;
+    static int bajar=0;//defino si bajo o no 1 para si
     if(bajar==0){//si no tiene q bajar
         if(direccion==DER){//muevo las naves a la derecha
             mov=DER;
             for(i=(LARGO-2);i>=0;--i){
                 for(j=(ANCHO-1);j>=0;--j){ 
                     if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
-                        movmat(i,j,mov);   
+                        movmat(i,j,mov); 
+                        if((space[i][ANCHO-1]>=1)&&(space[i][ANCHO-1]<=4)){//si hay algo en la ultima col
+                            direccion=IZQ;//invierto direccion
+                            bajar=1;//indico q tengo q bajar
+                        }
                     }
                 }
             }
@@ -148,7 +111,11 @@ int ciclonaves (int direccion){//mueva las naves en la matriz
             for(i=(LARGO-2);i>=0;--i){
                 for(j=0;j<ANCHO;++j){
                     if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                       
-                        movmat(i,j,mov);
+                        movmat(i,j,mov); 
+                        if((space[i][0]>=1)&&(space[i][0]<=4)){//si hay algo en la primer col
+                            direccion=DER;//invuerto direccion
+                            bajar=1;//indico q tengo q bajar
+                        }
                     }
                 }
             }
@@ -159,11 +126,16 @@ int ciclonaves (int direccion){//mueva las naves en la matriz
             for(j=0;j<ANCHO;++j){
                 if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                           
                     movmat(i,j,mov);                         
-                }
+                }               
+            }
+        }
+        for(i=(LARGO-1),j=0;j<ANCHO;++j){
+            if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave 
+                exit=1;//marco salir
             }
         }
     }
-    return direccion;
+    return exit;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 void nav_nod(void){    //spawnea nave nod y mueve nave nod
@@ -177,12 +149,8 @@ void nav_nod(void){    //spawnea nave nod y mueve nave nod
         }
     }
     if(haynavenod==0){//si no hay nave me fijo de spawnear una
-        srand(time(NULL));
-        num=rand() %100 + 1;
-        if(num<=10){//10% de q aparezca
-            space[0][0]=NAVNOD;
-            space[0][1]=NAVNOD;
-        }
+        space[0][0]=NAVNOD;
+        space[0][1]=NAVNOD;       
     }
     for(i=(LARGO-2);i>=0;--i){
         for(j=(ANCHO-1);j>=0;--j){
@@ -257,17 +225,13 @@ void ciclodisp (int *vidas,int *puntaje){//mueve los disparos y cambia puntaje y
             }
         }
     }
-    if(*puntaje>=1000){//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
-        *vidas+=1;
-        *puntaje=0;
-    }
 }
 ////////////////////////////////////////////////////////////////////////////////////
-int verparams(int nivel,int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
+void verparams(int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i,j;
     *naves=0;//pongo que hay 0 naves
     int vacio =0;//1 si hay naves 0 si no
-    int prom=1;//1 si tengo q promover una nave para q dispare
+    static int prom=1;//1 si tengo q promover una nave para q dispare
     for(i=0;i<LARGO;++i){
         for(j=0;j<ANCHO;++j){
             if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay naves
@@ -275,16 +239,6 @@ int verparams(int nivel,int *naves,int *puntaje){//se fija si pasaste al siguien
                 *naves+=1;//cuento las naves
             }
         }
-    }
-    if(vacio==0){//si no hay mas naves
-        ++nivel;//subo de nivel
-#ifdef RASPI       
-        matniv();//lv up , SOLO PARA RASPI, hacer de otra forma en allegro
-        printmat();
-        sleep(3);
-#endif
-        inimat();//borro el mundo
-        ininiv(nivel);//cargo el nuevo nivel
     }
     //ojo aca q me manejo con cols primero y despues fils
     for(i=0;i<ANCHO;++i){
@@ -302,7 +256,6 @@ int verparams(int nivel,int *naves,int *puntaje){//se fija si pasaste al siguien
         }
         prom=1;//parto diciendo q en esa col hay naves q necesiten ser promovidas
     }
-    return nivel;
 }
 //////////////////////////////////////////////////////////////////////////////
 void navdisp(int *vidas,int *puntaje,int *nivel,int numrandom){//determina cuando las naves disparan y cuando aparece la nave nodriza
@@ -327,10 +280,9 @@ void navdisp(int *vidas,int *puntaje,int *nivel,int numrandom){//determina cuand
     }   
 }
 /////////////////////////////////////////////////////////////////////////////////////
-void pmov(int *puntaje,int *ops){//movimiento y disparo del jugador
+void pmov(int *puntaje,int mov){//movimiento y disparo del jugador
     int disparo=0;//1 si hay diapro ya en juego
     int i,j;
-    int mov=0;//determina q hace, para testeo, borrar despues 
     //aca ir a allegro o raspberry
     for(i=0;i<LARGO;++i){//sacar estos for para multidisparo añadir breack point para testeo
         for(j=0;j<ANCHO;++j){
@@ -479,13 +431,6 @@ void pmov(int *puntaje,int *ops){//movimiento y disparo del jugador
             
     }
 }
-//////////////////////////////////////////////////////////////////////////////
-void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del programa o no;
-    if(*vidas==0){
-        *exit=0;
-        *pausa=0;//si pierdo marco como que el juego esta en pausa
-    }
-}
 
 
 /*******************************************************************************
@@ -493,6 +438,7 @@ void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del progra
                         LOCAL FUNCTION DEFINITIONS
  *******************************************************************************
  ******************************************************************************/
+#ifdef TESTEO
 void printmat(void){//para testeo
     int m=0;
     int n=0;
@@ -504,12 +450,11 @@ void printmat(void){//para testeo
     }
     printf("\n");
 }
+#endif
 /////////////////////////////////////////////////////////////////////////////
-void crear_enemigo(int nivel) 
-{
-    int i,j,p;
+void crear_enemigo(int nivel) {
+    int i,j;
     if(nivel > 5){ // limita la cantidad de niveles a 5 para evitar desbordamientos del stack
-        p=nivel;
         nivel=5;
     }
     
@@ -534,8 +479,6 @@ void crear_enemigo(int nivel)
             space[i][j]=ENEMYSHOT;
         }
     }
-    nivel=p; // conservo el valor original del nivel
-   
 }
 /////////////////////////////////////////////////////////////////////////////
 void crear_muro(void)
@@ -587,7 +530,8 @@ void matniv(void){// escribe LV UP
     int i=0;
     for(i=4;i<8;++i){
         switch(i){
-            case 4:
+            case 4:/*dcoord_t myPoint = {i, j};
+                disp_write(myPoint, D_ON);*/
                 space[i][1]=space[i][5]=space[i][7]=space[i][9]=space[i][11]=space[i][13]=space[i][14]=1;
                 break;
             case 5:
@@ -667,22 +611,6 @@ void printnum(int num,int digit[]){//imprimi un digito en la pos correspondiente
         default:
             break;
     }
-}
-//////////////////////////////////////////////////////////////////////////////////////////
-void menu(void){//para allegro hacer otra cosa, escribe el simbolo de play o end
-    space[3][6]=1;
-    space[4][6]=space[4][7]=1;
-    space[5][6]=space[5][7]=space[5][8]=1;
-    space[6][6]=space[6][7]=1;
-    space[7][6]=1;
-    //escribe END
-    space[10][4]=space[10][5]=space[10][6]=1;
-    space[11][4]=space[11][8]=space[11][11]=space[11][13]=space[11][14]=1;
-    space[12][4]=space[12][5]=space[12][6]=space[12][8]=space[12][9]=space[12][11]=space[12][13]=space[12][15]=1;
-    space[13][4]=space[13][8]=space[13][10]=space[13][11]=space[13][13]=space[13][15]=1;
-    space[14][4]=space[14][5]=space[14][6]=space[14][8]=space[14][11]=space[14][13]=space[14][14]=1;
-    //y como arranco con ops en 0 
-    space[5][0]=space[5][1]=1;//escribo el puntero
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 void printscore(int puntaje){//imprime el puntaje
