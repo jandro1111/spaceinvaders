@@ -16,6 +16,7 @@
 /*
  * 
  */
+//Hola, prueba
 
 #define THRESHOLD 40 //Límite a partir del cual se mueve el LED encendido
 
