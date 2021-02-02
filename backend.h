@@ -38,6 +38,8 @@ extern "C" {
 #define MURO 8
 #define DER 1
 #define IZQ 2
+#define UP 3
+#define ABAJO 4
 #include<stdio.h>
 #include<time.h>
 #include <stdlib.h>
@@ -54,6 +56,7 @@ void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves
 void pmov(int [][ANCHO],int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
 void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
 void nav_nod (int[][ANCHO]);//spawnea y mueve nave nod
+void movmat (int [][ANCHO],int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
 #ifdef __cplusplus
 }
 #endif

@@ -111,6 +111,7 @@ void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la d
 int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la matriz
     int i=0;
     int j=0;
+    int mov;
     int bajar=0;//defino si bajo o no 1 para si
     if(direccion==DER){//si va para la derecha me fijo la col de la derecha
         for(i=0;i<LARGO;++i){
@@ -134,37 +135,40 @@ int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la m
     }
     if(bajar==0){//si no tiene q bajar
         if(direccion==DER){//muevo las naves a la derecha
+            mov=DER;
             for(i=(LARGO-2);i>=0;--i){
-                for(j=(ANCHO-1);j>=0;--j){                   
-                        space[i][j+1]=space[i][j];//muevo la nave
-                        space[i][j]=0;//borro la posicion anterior de esa nave;                       
+                for(j=(ANCHO-1);j>=0;--j){ 
+                    if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
+                        movmat(space,i,j,mov);   
                     }
                 }
+            }
         }else{//muevo las naves a la izquierda
+            mov =IZQ;
             for(i=(LARGO-2);i>=0;--i){
                 for(j=0;j<ANCHO;++j){
                     if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                       
-                        space[i][j-1]=space[i][j];//muevo la nave
-                        space[i][j]=0;//borro la posicion anterior de esa nave;                        
+                        movmat(space,i,j,mov);
                     }
                 }
             }
         }
     }else{//tiene q bajar
-            for(i=(LARGO-2);i>=0;--i){
-                    for(j=0;j<ANCHO;++j){
-                        if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                           
-                            space[i+1][j]=space[i][j];//muevo la nave
-                            space[i][j]=0;//borro la posicion anterior de esa nave;                           
-                        }
-                    }
+        mov=ABAJO;
+        for(i=(LARGO-2);i>=0;--i){
+            for(j=0;j<ANCHO;++j){
+                if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                           
+                    movmat(space,i,j,mov);                         
                 }
+            }
+        }
     }
     return direccion;
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
     int i,j,haynavenod,num;
+    int mov=DER;
     for(j=0;j<ANCHO;++j){//me fijo si hay una nave nod en juego
         if(space[0][j]==NAVNOD){
             haynavenod=1;//marco que hay nave nod
@@ -187,8 +191,7 @@ void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
                     space[i][j-1]=0;
                     space[i][j]=0;
                 }else{
-                    space[i][j+1]=space[i][j];//muevo la nave
-                    space[i][j]=0;//borro la posicion anterior de esa nave;
+                    movmat(space,i,j,mov);
                 }   
             }
         }
@@ -196,16 +199,16 @@ void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los disparos y cambia puntaje y vidas
-    int i,j;
+    int i,j,mov;
     for(i=(LARGO-1);i>=0;--i){
         for(j=(ANCHO-1);j>=0;--j){
             if(space[i][j]==ESHOT){//si hay un disparo enemigo
+                mov=ABAJO;
                 if(i==(LARGO-1)){//si estoy en la ultima fila lo desaparezco
                     space[i][j]=0;
                 }else{//si estoy en otra fila
                     if(space[i+1][j]==0){//si adelante del disparo no hay nada
-                        space[i+1][j]=space[i][j];//muevo el disp
-                        space[i][j]=0;//borro la anterior posicion del disp
+                        movmat(space,i,j,mov);
                     }else{//hay algo
                         if(space[i+1][j]==PLAYER){//si es el jugador
                             space[i][j]=0;
@@ -222,12 +225,12 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
     for(i=0;i<LARGO;++i){
         for(j=0;j<ANCHO;++j){
             if(space[i][j]==PSHOT){//si hay un disparo de jugador
+                mov=UP;
                 if(i==0){//estoy en la primer fil 
                     space[i][j]=0;
                 }else{
                     if(space[i-1][j]==0){//si adelante del disparo no hay nada
-                        space[i-1][j]=space[i][j];//muevo el disp
-                        space[i][j]=0;//borro la anterior posicion del disp
+                        movmat(space,i,j,mov);
                     }else{//hay algo
                         if((space[i-1][j]==ENEMY)||(space[i-1][j]==ENEMYSHOT)||(space[i-1][j]==NAVNOD)||(space[i-1][j]==ENEMY_2)||(space[i-1][j]==ENEMY_3)){//si es enemigo cambiar si se agregan mas tipos de nemigos
                             *puntaje+=((space[i-1][j])*10);
@@ -549,4 +552,28 @@ void crear_muro(int space[][ANCHO])
     }
     
 }
-
+//////////////////////////////////////////////////////////////////////////////
+void movmat(int space [][ANCHO],int largo,int ancho,int mov){//mueve elementos de la matriz a izquierda derecha arriba o abajo
+    switch(mov){
+        case DER:
+           space[largo][ancho+1]=space[largo][ancho];//muevo lo que haya ahi
+           space[largo][ancho]=0;//borro su anterior posicion
+        break;
+        case IZQ:
+           space[largo][ancho-1]=space[largo][ancho];
+           space[largo][ancho]=0; 
+        break;
+        case UP:
+           space[largo-1][ancho]=space[largo][ancho];
+           space[largo][ancho]=0; 
+        break;
+        case ABAJO:
+           space[largo+1][ancho]=space[largo][ancho];
+           space[largo][ancho]=0; 
+        break;
+        default:
+        break;
+            
+                
+    }
+}
