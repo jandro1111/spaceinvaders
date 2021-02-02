@@ -51,9 +51,9 @@ int ciclonaves (int [][ANCHO],int);//mueve las naves enemigas
 void ciclodisp(int [][ANCHO],int*,int*);//mueve disparos del player y el enemigo
 int verparams(int [][ANCHO],int,int *,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
 void navdisp(int [][ANCHO],int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
-void pmov(int [][ANCHO],int *,int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
+void pmov(int [][ANCHO],int *,int *); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
 void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
-
+void nav_nod (int[][ANCHO]);//spawnea y mueve nave nod
 #ifdef __cplusplus
 }
 #endif

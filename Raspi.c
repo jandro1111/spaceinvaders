@@ -59,17 +59,14 @@ int main(void) {
     disp_write(pos, D_OFF); //apaga la posición vieja en el buffer
     disp_write(npos, D_ON); //enciende la posición nueva en el buffer
     pos = npos; //actualiza la posición actual
-
-
-
 }
-
+/////////////////////////////////////////////////////////
 void raspinit(void) {
     joy_init(); //inicializa el joystick
     disp_init(); //inicializa el display
     disp_clear(); //limpia todo el display
 }
-
+/////////////////////////////////////////////////////////////
 void rasprint(int space [][ANCHO]) {//es el printmat para raspi
     int i, j;
     for (i = 0; i < ANCHO; ++i) {//copia el contenido de la matriz en el buffer de leds
@@ -85,7 +82,7 @@ void rasprint(int space [][ANCHO]) {//es el printmat para raspi
     }
     disp_update();
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////
 void matniv(int space[][ANCHO]){// escribe LV UP
     int i=0;
     for(i=4;i<8;++i){
@@ -107,6 +104,7 @@ void matniv(int space[][ANCHO]){// escribe LV UP
         }
     }
 }
+/////////////////////////////////////////////////////////////////////////////////////////
 void printnum(int space[][ANCHO],int num,int digit[]){//imprimi un digito en la pos correspondiente
     int a,b,c,d;
     a=digit[0];
@@ -170,6 +168,7 @@ void printnum(int space[][ANCHO],int num,int digit[]){//imprimi un digito en la 
             break;
     }
 }
+//////////////////////////////////////////////////////////////////////////////////////////
 void menu(int space[][ANCHO]){//para allegro hacer otra cosa, escribe el simbolo de play o end
     space[3][6]=1;
     space[4][6]=space[4][7]=1;
@@ -185,7 +184,7 @@ void menu(int space[][ANCHO]){//para allegro hacer otra cosa, escribe el simbolo
     //y como arranco con ops en 0 
     space[5][0]=space[5][1]=1;//escribo el puntero
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////
 void printscore(int space [][ANCHO],int puntaje){//imprime el puntaje
     int num=0;//aisla digitos para pasar a matriz
     inimat(space);

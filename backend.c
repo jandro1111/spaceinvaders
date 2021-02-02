@@ -67,6 +67,7 @@ void inimat(int space[][ANCHO]){ //inicializa la mat como vacia
         }       
     }
 }
+/////////////////////////////////////////////////////////////////////
 void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la del jugador
     //harcodeo la nave del player
     space[LARGO-1][ANCHO/2]=PLAYER;
@@ -106,106 +107,100 @@ void ininiv(int space[][ANCHO],int nivel){//inicializa las naves enemigas y la d
                
    } 
 }
-
+///////////////////////////////////////////////////////////////////////////////////
 int ciclonaves (int space[LARGO][ANCHO],int direccion){//mueva las naves en la matriz
     int i=0;
     int j=0;
-    int omit=0;//si ya movi a la nave nod 1 para si
     int bajar=0;//defino si bajo o no 1 para si
     if(direccion==DER){//si va para la derecha me fijo la col de la derecha
-        for(i=0;i<ANCHO;++i){
+        for(i=0;i<LARGO;++i){
             if((space[i][ANCHO-1]>=1)&&(space[i][ANCHO-1]<=4)){//si hay algo en la ultima col
                 direccion=IZQ;//invierto direccion
                 bajar=1;//indico q tengo q bajar
             }
         }
     }else{//me fijo en la col de la izquierda
-        for(i=0;i<ANCHO;++i){//si va para la izq
+        for(i=0;i<LARGO;++i){//si va para la izq
             if((space[i][0]>=1)&&(space[i][0]<=4)){//si hay algo en la primer col
                 direccion=DER;//invuerto direccion
                 bajar=1;//indico q tengo q bajar
             }
         }
     }
-    for(i=(ANCHO-2),j=0;j<LARGO;++j){//verifico la penultima fil
+    for(i=(LARGO-2),j=0;j<ANCHO;++j){//verifico la penultima fil
         if((space[i][j]>=1)&&(space[i][j]<=4)){//si hay naves en la penultima fil no bajo
             bajar=0;
         }
     }
     if(bajar==0){//si no tiene q bajar
         if(direccion==DER){//muevo las naves a la derecha
-            for(i=(ANCHO-2);i>=0;--i){
-                for(j=(ANCHO-1);j>=0;--j){
-                    if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
-                        if(space[i][j]==NAVNOD){//si es la nave nodriza, siempre se mueve de izq a der
-                            if(j==(ANCHO-1)){//si la nave nod esta al borde desaparece
-                                space[i][j-1]=0;
-                                space[i][j]=0;
-                            }else{
-                                space[i][j+1]=space[i][j];//muevo la nave
-                                space[i][j]=0;//borro la posicion anterior de esa nave;
-                            }   
-                        }else{
-                            space[i][j+1]=space[i][j];//muevo la nave
-                            space[i][j]=0;//borro la posicion anterior de esa nave;
-                        }
+            for(i=(LARGO-2);i>=0;--i){
+                for(j=(ANCHO-1);j>=0;--j){                   
+                        space[i][j+1]=space[i][j];//muevo la nave
+                        space[i][j]=0;//borro la posicion anterior de esa nave;                       
                     }
                 }
-            }
         }else{//muevo las naves a la izquierda
-            for(i=(ANCHO-2);i>=0;--i){
+            for(i=(LARGO-2);i>=0;--i){
                 for(j=0;j<ANCHO;++j){
-                    if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
-                        if(space[i][j]==NAVNOD){//si es la nave nod va de izq a der
-                            if(j==(ANCHO-1)){//si la nave nod esta al borde desaparece
-                                space[i][j-1]=0;
-                                space[i][j]=0;
-                            }else{
-                                if(omit==0){//si no movi la nave nod
-                                    omit=1;//marco que ya la movi
-                                    space[i][j+2]=space[i][j+1]=space[i][j];//muevo la nave
-                                    space[i][j]=0;//borro la posicion anterior de esa nave;
-                                }
-                            }
-                        }else{
-                            space[i][j-1]=space[i][j];//muevo la nave
-                            space[i][j]=0;//borro la posicion anterior de esa nave;
-                        }
+                    if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                       
+                        space[i][j-1]=space[i][j];//muevo la nave
+                        space[i][j]=0;//borro la posicion anterior de esa nave;                        
                     }
                 }
             }
         }
     }else{//tiene q bajar
-            for(i=(ANCHO-2);i>=0;--i){
+            for(i=(LARGO-2);i>=0;--i){
                     for(j=0;j<ANCHO;++j){
-                        if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave
-                            if(space[i][j]==NAVNOD){//si es la nave nod
-                                if(j==(ANCHO-1)){//si la nave nod esta al borde desaparece
-                                    space[i][j-1]=0;
-                                    space[i][j]=0;
-                                }else{
-                                    if(omit==0){//si no movi la nave nod
-                                        omit=1;//marco q ya la movi
-                                        space[i][j+2]=space[i][j+1]=space[i][j];//muevo la nave
-                                        space[i][j]=0;//borro la posicion anterior de esa nave;
-                                    }
-                                }
-                            }else{
-                                space[i+1][j]=space[i][j];//muevo la nave
-                                space[i][j]=0;//borro la posicion anterior de esa nave;
-                            }
+                        if((space[i][j]>=1)&&(space[i][j]<=5)){//si hay nave                           
+                            space[i+1][j]=space[i][j];//muevo la nave
+                            space[i][j]=0;//borro la posicion anterior de esa nave;                           
                         }
                     }
                 }
     }
     return direccion;
 }
+////////////////////////////////////////////////////////////////////////////////////////
+void nav_nod(int space[][ANCHO]){    //spawnea nave nod y mueve nave nod
+    int i,j,haynavenod,num;
+    for(j=0;j<ANCHO;++j){//me fijo si hay una nave nod en juego
+        if(space[0][j]==NAVNOD){
+            haynavenod=1;//marco que hay nave nod
+        }else{
+            haynavenod=0;//no hay una nave
+        }
+    }
+    if(haynavenod==0){//si no hay nave me fijo de spawnear una
+        srand(time(NULL));
+        num=rand() %100 + 1;
+        if(num<=10){//10% de q aparezca
+            space[0][0]=NAVNOD;
+            space[0][1]=NAVNOD;
+        }
+    }
+    for(i=(LARGO-2);i>=0;--i){
+        for(j=(ANCHO-1);j>=0;--j){
+            if(space[i][j]==NAVNOD){//si es la nave nodriza, siempre se mueve de izq a der
+                if(j==(ANCHO-1)){//si la nave nod esta al borde desaparece
+                    space[i][j-1]=0;
+                    space[i][j]=0;
+                }else{
+                    space[i][j+1]=space[i][j];//muevo la nave
+                    space[i][j]=0;//borro la posicion anterior de esa nave;
+                }   
+            }
+        }
+    }
+}
+//////////////////////////////////////////////////////////////////////////////////////////
 void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los disparos y cambia puntaje y vidas
     int i,j;
     for(i=(LARGO-1);i>=0;--i){
         for(j=(ANCHO-1);j>=0;--j){
             if(space[i][j]==ESHOT){//si hay un disparo enemigo
-                if(i==15){//si estoy en la ultima fila lo desaparezco
+                if(i==(LARGO-1)){//si estoy en la ultima fila lo desaparezco
                     space[i][j]=0;
                 }else{//si estoy en otra fila
                     if(space[i+1][j]==0){//si adelante del disparo no hay nada
@@ -264,6 +259,7 @@ void ciclodisp (int space[LARGO][ANCHO],int *vidas,int *puntaje){//mueve los dis
         *puntaje=0;
     }
 }
+////////////////////////////////////////////////////////////////////////////////////
 int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i,j;
     *naves=0;//pongo que hay 0 naves
@@ -305,6 +301,7 @@ int verparams(int space[][ANCHO],int nivel,int *naves,int *puntaje){//se fija si
     }
     return nivel;
 }
+//////////////////////////////////////////////////////////////////////////////
 void navdisp(int space [][ANCHO],int *vidas,int *puntaje,int *nivel,int numrandom){//determina cuando las naves disparan y cuando aparece la nave nodriza
     int i,j;
     int haynavenod=0;//1 para si
@@ -324,22 +321,10 @@ void navdisp(int space [][ANCHO],int *vidas,int *puntaje,int *nivel,int numrando
                 }
             }
         }
-    }
-    for(j=0;j<ANCHO;++j){//me fijo si hay una nave nod en juego
-        if(space[0][j]==NAVNOD){
-            haynavenod=1;//marco que hay nave nod
-        }
-    }
-    if(haynavenod==0){//si no hay nave me fijo de spawnear una
-        srand(time(NULL));
-        num=rand() %100 + 1;
-        if(num<=10){//10% de q aparezca
-            space[0][0]=NAVNOD;
-            space[0][1]=NAVNOD;
-        }
-    }
+    }   
 }
-void pmov(int space [][ANCHO],int *puntaje,int *pausa,int *ops){//movimiento y disparo del jugador
+/////////////////////////////////////////////////////////////////////////////////////
+void pmov(int space [][ANCHO],int *puntaje,int *ops){//movimiento y disparo del jugador
     int disparo=0;//1 si hay diapro ya en juego
     int i,j;
     int mov=0;//determina q hace, para testeo, borrar despues 
@@ -357,36 +342,50 @@ void pmov(int space [][ANCHO],int *puntaje,int *pausa,int *ops){//movimiento y d
         case 0://no me muevo
             break;
         case 1://me muevo a derecha
-            if(*pausa==1){//si no estoy en pausa
-                for(j=ANCHO-1;j>=0;--j){
-                    if(j==(ANCHO-1)){//si estoy a la derecha de todo no me muevo
+            for(j=ANCHO-1;j>=0;--j){
+                if(j==(ANCHO-1)){//si estoy a la derecha de todo no me muevo
 
-                    }else{
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave la muevo a la der
-                            space[LARGO-1][j+1]=PLAYER;
-                            space[LARGO-1][j]=0;
-                        }
+                }else{
+                    if(space[LARGO-1][j]==PLAYER){//si es la nave la muevo a la der
+                        space[LARGO-1][j+1]=PLAYER;
+                        space[LARGO-1][j]=0;
                     }
                 }
             }
             break;
         case 2://me muevo a la izq
-            if(*pausa==1){//si no estoy en pausa
-                for(j=0;j<ANCHO;++j){
-                    if(j==0){//si estoy a la izquierda de todo no me muevo
+            for(j=0;j<ANCHO;++j){
+                if(j==0){//si estoy a la izquierda de todo no me muevo
 
-                    }else{
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave la muevo a la izq
-                            space[LARGO-1][j-1]=PLAYER;
-                            space[LARGO-1][j]=0;
-                        }
+                }else{
+                    if(space[LARGO-1][j]==PLAYER){//si es la nave la muevo a la izq
+                        space[LARGO-1][j-1]=PLAYER;
+                        space[LARGO-1][j]=0;
                     }
                 }
             }
             break;
         case 3://disparo sin moverme (arriba)
-            if(*pausa==1){//si no estoy en pausa
-                for(j=0;j<ANCHO;++j){               
+            for(j=0;j<ANCHO;++j){               
+                if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
+                    if(disparo==0){//si no hay un disparo en juego
+                        if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
+                            *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
+                            space[LARGO-2][j]=0;//mato la nave
+                        }else{
+                            if(space[LARGO-2][j]==MURO){//si hay muro
+                                space[LARGO-2][j]=0;//rompe el muro
+                            }else{
+                                space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
+                            }
+                        }
+                    }
+                }                
+            }
+            break;
+        case 4://disparo y me muevo a la derecha
+            for(j=ANCHO-1;j>=0;--j){
+                if(j==(ANCHO-1)){//si estoy a la derecha de todo no me muevo
                     if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
                         if(disparo==0){//si no hay un disparo en juego
                             if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
@@ -400,130 +399,84 @@ void pmov(int space [][ANCHO],int *puntaje,int *pausa,int *ops){//movimiento y d
                                 }
                             }
                         }
-                    }                
-                }
-            }else{
-                if(*ops==1){//si estoy en la opcion de abajo subo
-                    *ops-=1;
-                    space[5][0]=space[5][1]=1;
-                    space[12][0]=space[12][1]=0;//cambio el puntero
-                }//si no nada
-            }
-            break;
-        case 4://disparo y me muevo a la derecha
-            if(*pausa==1){//si no estoy en pausa
-                for(j=ANCHO-1;j>=0;--j){
-                    if(j==(ANCHO-1)){//si estoy a la derecha de todo no me muevo
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
-                            if(disparo==0){//si no hay un disparo en juego
-                                if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
-                                    *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
-                                    space[LARGO-2][j]=0;//mato la nave
-                                }else{
-                                    if(space[LARGO-2][j]==MURO){//si hay muro
-                                        space[LARGO-2][j]=0;//rompe el muro
-                                    }else{
-                                        space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
-                            if(disparo==0){//si no hay un diapro en juego
-                                if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
-                                    *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
-                                    space[LARGO-2][j]=0;//mato la nave
+                    }
+                }else{
+                    if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
+                        if(disparo==0){//si no hay un diapro en juego
+                            if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
+                                *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
+                                space[LARGO-2][j]=0;//mato la nave
+                                space[LARGO-1][j+1]=PLAYER;//muevo a la der
+                                space[LARGO-1][j]=0;
+                            }else{
+                                if(space[LARGO-2][j]==MURO){//si hay muro
+                                    space[LARGO-2][j]=0;//rompo muro
                                     space[LARGO-1][j+1]=PLAYER;//muevo a la der
                                     space[LARGO-1][j]=0;
                                 }else{
-                                    if(space[LARGO-2][j]==MURO){//si hay muro
-                                        space[LARGO-2][j]=0;//rompo muro
-                                        space[LARGO-1][j+1]=PLAYER;//muevo a la der
-                                        space[LARGO-1][j]=0;
-                                    }else{
-                                        space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
-                                        space[LARGO-1][j+1]=PLAYER;//muevo a la der
-                                        space[LARGO-1][j]=0;
-                                    }
+                                    space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
+                                    space[LARGO-1][j+1]=PLAYER;//muevo a la der
+                                    space[LARGO-1][j]=0;
                                 }
-                            }else{//si hay un disparo solo me muevo
-                                space[LARGO-1][j+1]=PLAYER;//muevo a la der
-                                space[LARGO-1][j]=0;
                             }
+                        }else{//si hay un disparo solo me muevo
+                            space[LARGO-1][j+1]=PLAYER;//muevo a la der
+                            space[LARGO-1][j]=0;
                         }
                     }
                 }
             }
-            break;
+        break;
         case 5://disparo y me muevo a la izq
-            if(*pausa==1){//si no estoy en pausa
-                for(j=0;j<ANCHO;++j){
-                    if(j==0){//si estoy a la izq de todo no me muevo
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
-                            if(disparo==0){//si no hay disparo
-                                if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
-                                    *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
-                                    space[LARGO-2][j]=0;//mato la nave
+            for(j=0;j<ANCHO;++j){
+                if(j==0){//si estoy a la izq de todo no me muevo
+                    if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
+                        if(disparo==0){//si no hay disparo
+                            if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
+                                *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
+                                space[LARGO-2][j]=0;//mato la nave
+                            }else{
+                                if(space[LARGO-2][j]==MURO){//si hay muro
+                                    space[LARGO-2][j]=0;//rompo muro
                                 }else{
-                                    if(space[LARGO-2][j]==MURO){//si hay muro
-                                        space[LARGO-2][j]=0;//rompo muro
-                                    }else{
-                                        space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
-                                    }
+                                    space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
                                 }
                             }
                         }
-                    }else{
-                        if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
-                            if(disparo==0){//si no hay un disparo
-                                if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
-                                    *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
-                                    space[LARGO-2][j]=0;//mato la nave
+                    }
+                }else{
+                    if(space[LARGO-1][j]==PLAYER){//si es la nave disparo
+                        if(disparo==0){//si no hay un disparo
+                            if((space[LARGO-2][j]>=1)&&(space[LARGO-2][j]<=5)){//si hay un enemigo justo adelante
+                                *puntaje+=((space[LARGO-2][j])*5);//sumo puntos
+                                space[LARGO-2][j]=0;//mato la nave
+                                space[LARGO-1][j-1]=PLAYER;//muevo a la izq
+                                space[LARGO-1][j]=0;
+                            }else{
+                                if(space[LARGO-2][j]==MURO){//si hay muro
+                                    space[LARGO-2][j]=0;//rompo muro
                                     space[LARGO-1][j-1]=PLAYER;//muevo a la izq
                                     space[LARGO-1][j]=0;
                                 }else{
-                                    if(space[LARGO-2][j]==MURO){//si hay muro
-                                        space[LARGO-2][j]=0;//rompo muro
-                                        space[LARGO-1][j-1]=PLAYER;//muevo a la izq
-                                        space[LARGO-1][j]=0;
-                                    }else{
-                                        space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
-                                        space[LARGO-1][j-1]=PLAYER;//muevo a la izq
-                                        space[LARGO-1][j]=0;
-                                    }
+                                    space[LARGO-2][j]=PSHOT;//spawneo el disparo del jugador
+                                    space[LARGO-1][j-1]=PLAYER;//muevo a la izq
+                                    space[LARGO-1][j]=0;
                                 }
-                            }else{//si hay un disparo solo muevo
-                                space[LARGO-1][j-1]=PLAYER;//muevo a la izq
-                                space[LARGO-1][j]=0;
                             }
+                        }else{//si hay un disparo solo muevo
+                            space[LARGO-1][j-1]=PLAYER;//muevo a la izq
+                            space[LARGO-1][j]=0;
                         }
                     }
                 }
             }
-            break;
-        case 6://le doy a pausa/sellecionar la opcion del menu
-            if(*pausa==1){//si el juego no esta en pausa
-                *pausa=0;//pongo el juego en pausa
-            }else{
-                *pausa =1;
-            }
-            break;
-        case 7://abajo
-            if(*pausa==0){//si estoy en pausa
-                if(*ops==0){//si estoy en la opcion de arriba, bajo
-                    *ops+=1;
-                    space[5][0]=space[5][1]=0;
-                    space[12][0]=space[12][1]=1;//cambio el puntero
-                }//si no nada
-            }
-            break;
+        break;
         default:
             break;
             
     }
 }
-
+//////////////////////////////////////////////////////////////////////////////
 void exit_cond(int *vidas,int *exit,int *pausa){//devuelve si se sale del programa o no;
     if(*vidas==0){
         *exit=0;
@@ -548,8 +501,7 @@ void printmat(int space[][ANCHO]){//para testeo
     }
     printf("\n");
 }
-
-
+/////////////////////////////////////////////////////////////////////////////
 void crear_enemigo(int nivel,int space[][ANCHO]) 
 {
     int i,j,p;
@@ -559,7 +511,7 @@ void crear_enemigo(int nivel,int space[][ANCHO])
     }
     
     for(i=nivel;i<(nivel+3);i+=2){     
-        for(j=1;j<LARGO;j+=SEP_RASP){//seteo enemigos
+        for(j=1;j<ANCHO;j+=SEP_RASP){//seteo enemigos
             if(i==nivel){
                 space[i][j]=ENEMY_3;
             }else{
@@ -575,18 +527,19 @@ void crear_enemigo(int nivel,int space[][ANCHO])
         }       
     }
     for(i=(nivel+4);i<(nivel+5);++i){
-        for(j=1;j<LARGO;j+=SEP_RASP){
+        for(j=1;j<ANCHO;j+=SEP_RASP){
             space[i][j]=ENEMYSHOT;
         }
     }
     nivel=p; // conservo el valor original del nivel
    
 }
+/////////////////////////////////////////////////////////////////////////////
 void crear_muro(int space[][ANCHO])
 {
     int i,j;
     for(i=13;i<15;++i){     
-        for(j=1;j<LARGO;j+=3){//seteo defensas
+        for(j=1;j<ANCHO;j+=3){//seteo defensas
             space[i][j]=MURO;
             ++j;
             space[i][j]=MURO;
