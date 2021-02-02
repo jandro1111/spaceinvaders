@@ -16,13 +16,27 @@
 
 #include"backend.h"
 #include"raspi.h"
-
 // uso srand(time(NULL)) para incializar
 //rand() % 10 + 1;10 rango 1 valor inicial
 
 
 //ESTO QUEDA ACA PARA DESPUES METER EN EL FRONTEND DE RASPI
-
+/*int main(){
+    int puntaje=0;
+    int vidas=3;
+    int nivel=1;
+    int i;
+    inimat();
+    ininiv(nivel);
+    for(i=0;i<30;++i){
+        ciclodisp(&vidas,&puntaje);
+        navdisp(&vidas);
+        printmat();
+        sleep(1);
+    }
+    
+return EXIT_SUCCESS;    
+}
 
 /*int main(){
     int i,j;

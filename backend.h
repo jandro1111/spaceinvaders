@@ -45,21 +45,47 @@ extern "C" {
 #include <stdlib.h>
 #include <stdint.h>
 #include<unistd.h>
+    /////////////////////////////////
+    enum objetos {
+    WARNING =-1,
+  NADA = 0,
+  NAVE_ENEMIGA,
+  NAVE_NODRIZA,
+  ESCUDO,
+  JUGADOR,
+};
+
+typedef struct {
+  int i;
+  int j;
+  int objeto; // Valor tomado de enum objetos
+} coord_t;
+typedef struct{
+    int vidas;
+    int puntaje;
+    int nivel;
+    coord_t coordsp;
+    int *tablero;
+    int naves;
+    int mov;
+}juego_t;
+///////////////////////////////////////////
+void getcoordp(juego_t*);
 void exit_cond(int *,int *,int *);//si te quedas sin vidas te lleva al menu
 void inimat (void);//inicializa la matriz en 0
 void printmat (void);//imprime la matriz (testeo)
 void ininiv(int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
 int ciclonaves (void);//mueve las naves enemigas
-void ciclodisp(int*,int*);//mueve disparos del player y el enemigo
-void verparams(int *,int *);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
-void navdisp(int *,int *,int *,int );//decide si dispara las naves, y spawnea nave nodriza
-void pmov(int *,int); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
-void matniv(void);//para raspi, esccribe level up en la matriz
+coord_t ciclodisp(juego_t*,int,int);//mueve disparos del player y el enemigo
+void verparams(juego_t*);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
+void navdisp(void );//decide si dispara las naves, y spawnea nave nodriza
+void pmov(juego_t*); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
 void nav_nod (void);//spawnea y mueve nave nod
 void movmat (int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
 int getmat(int,int);//te dice que hay en esas coords de la matriz
-void printscore(int );//para raspi escribe el puntaje
-void printnum(int,int[]);//funcion local para printscore
+void playerdisp(int,int,int);//pone el disparo del player
+void inigame(juego_t*,int);
+
 #ifdef __cplusplus
 }
 #endif
