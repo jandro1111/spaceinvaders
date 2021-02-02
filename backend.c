@@ -330,7 +330,7 @@ void navdisp(void) {//determina cuando las naves disparan y cuando aparece la na
 void pmov(juego_t* juego) {//movimiento y disparo del jugador
     int disparo = 0; //1 si hay diapro ya en juego
     int i, j;
-    //aca ir a allegro o raspberry
+
     for (i = 0; i < LARGO; ++i) {//sacar estos for para multidisparo añadir breack point para testeo
         for (j = 0; j < ANCHO; ++j) {
             if (space[i][j] == PSHOT) {
