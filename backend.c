@@ -103,7 +103,7 @@ void getcoordp(juego_t *juego) {
 
 void ininiv(int nivel) {//inicializa las naves enemigas y la del jugador
     //harcodeo la nave del player
-    if (nivel == 0) {
+    if (nivel <= 0) {
         return;
     }
     space[LARGO - 1][ANCHO / 2] = PLAYER;

@@ -21,15 +21,30 @@
 #define THRESHOLD 40 //Límite a partir del cual se mueve el LED encendido
 
 int main(void) {
-    raspinit();
+   
+    raspinit();     //inicializo los componentes de la raspi
     
     int space[LARGO][ANCHO];
+    
+    juego_t componentes;
+    inigame(juego_t,1); //mando el nivel 1, ver si hay que elegir nivel
+    inimat();
+    
+    int quit_game=0;
+    int pausa=0;
+    int lost=0;
+    
 
     dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
     dcoord_t npos = pos; //npos es la próxima posición
     jcoord_t coord = {0, 0}; //coordenadas medidas del joystick
 
 
+    while (quit_game != 1)
+    {
+        ininiv(componentes.nivel);
+        
+    }
 
     if (joy_get_switch() == J_NOPRESS) {
         while (joy_get_switch() != J_NOPRESS) {
@@ -46,7 +61,7 @@ int main(void) {
             if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
                 //llamo fun izq y disp
             } else {
-                //llamo izq
+                pmov(2,)
             }
         }
         if (coord.y > THRESHOLD && npos.y > DISP_MIN) {
