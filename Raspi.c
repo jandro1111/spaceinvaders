@@ -43,34 +43,42 @@ int main(void) {
     while (quit_game != 1)
     {
         ininiv(componentes.nivel);
-        
+        //ciclo naves
+        //nav_nod
+        //coord_t ciclodisp(juego_t *juego, int i, int j)
+        //
     }
 
-    if (joy_get_switch() == J_NOPRESS) {
-        while (joy_get_switch() != J_NOPRESS) {
+    if (joy_get_switch() == J_NOPRESS) 
+    {
+        pausa=1;
+    }
+        while (pausa == 1) 
+        {
+            //menu
         } //do nothing 
     } else {
         if (coord.x > THRESHOLD && npos.x < DISP_MAX_X) {
             if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-                //llamo fun der y disp
+                pmov(4,&componentes);
             } else {
-                //llamo fun der
+                pmov(1,&componentes);
             }
         }
-        if (coord.x < -THRESHOLD && npos.x > DISP_MIN) {
+        else if (coord.x < -THRESHOLD && npos.x > DISP_MIN) {
             if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-                //llamo fun izq y disp
+                pmov(5,&componentes);
             } else {
-                pmov(2,)
+                pmov(2,&componentes);
             }
         }
-        if (coord.y > THRESHOLD && npos.y > DISP_MIN) {
-            npos.y--;
+        else if (coord.y > THRESHOLD && npos.y > DISP_MIN) {
+            pmov(3,&componentes);
         }
-        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-            npos.y++;
-        }
-    }
+//        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+//            npos.y++;
+//        }
+//    }
 
     disp_write(pos, D_OFF); //apaga la posición vieja en el buffer
     disp_write(npos, D_ON); //enciende la posición nueva en el buffer
