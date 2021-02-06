@@ -13,7 +13,12 @@
 /*
  * 
  */
-void menu(int space[][ANCHO]){//para allegro hacer otra cosa, escribe el simbolo de play o end
+void menu(int space[][ANCHO],int opcion){//para allegro hacer otra cosa, escribe el simbolo de play o end
+    if(opcion != 5 && opcion != 12)
+    {
+        return;
+    }
+    
     space[3][6]=1;
     space[4][6]=space[4][7]=1;
     space[5][6]=space[5][7]=space[5][8]=1;
@@ -25,8 +30,8 @@ void menu(int space[][ANCHO]){//para allegro hacer otra cosa, escribe el simbolo
     space[12][4]=space[12][5]=space[12][6]=space[12][8]=space[12][9]=space[12][11]=space[12][13]=space[12][15]=1;
     space[13][4]=space[13][8]=space[13][10]=space[13][11]=space[13][13]=space[13][15]=1;
     space[14][4]=space[14][5]=space[14][6]=space[14][8]=space[14][11]=space[14][13]=space[14][14]=1;
-    //y como arranco con ops en 0 
-    space[5][0]=space[5][1]=1;//escribo el puntero
+    
+    space[opcion][0]=space[5][1]=1;//escribo el puntero en 5 o 12 segun corresponda
 }
 
 void matniv(int space[][ANCHO]) {// escribe LV UP
