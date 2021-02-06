@@ -26,7 +26,7 @@ int main(void) {
 
     raspinit(); //inicializo los componentes de la raspi
 
-    int space[LARGO][ANCHO];
+    int space[LARGO][ANCHO];    //CREO QUE NO ES NECESARIA, CAMBIAR FUNCIONES
 
     juego_t componentes;
     inigame(juego_t, 1); //mando el nivel 1, ver si hay que elegir nivel
@@ -51,20 +51,25 @@ int main(void) {
         //nav_nod
         //coord_t ciclodisp(juego_t *juego, int i, int j)
         //
-        ciclos++;
+        
         random = (rand() % 10) + 21; //numero entre 20 y 30
 
         if (random == ciclos) {
-            ;
+            nmadre=1;
+        }
+        if (nmadre=1)
+        {
+            nav_nod; //ver como pararla
         }
         for (i = 0; i <= conta; i++) {
-            ciclo naves();
-
+            ciclonaves();
+            ciclos++;
+            rasprint(space);
         }
 
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
-                pause_menu(space,quit_game);
+                pause_menu(space, quit_game);
 
             } //do nothing 
         } else {
@@ -90,18 +95,22 @@ int main(void) {
         }
         if (componentes.naves == 0) {
             componentes.nivel++;
+            matniv(space);
+        }
+        if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
+            componentes.vidas++;
+            componentes.puntaje = 0;
         }
         if (componentes.vidas == 0) {
-            pause_menu(space,quit_game);
-            inigame(&componentes,1);//inicializa en nivel 1
+            printscore(space, componentes.puntaje);
+            usleep(3);
+            pause_menu(space, quit_game);
+            inigame(&componentes, 1); //inicializa en nivel 1
         }
     }
 }
 /////////////////////////
-/*if(puntaje>=1000){//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
-        vidas+=1;
-        puntaje=0;
-    }
+/*
  
  space[5][0]=space[5][1]=1;//escribo el puntero opcion 1 play
  *space[12][0]=space[12][1]=1;//escribo el puntero opcion 2 quit
@@ -136,7 +145,7 @@ void rasprint(int space [][ANCHO]) {//es el printmat para raspi
 /////////////////////////////////////////////////////////////////////////////////////////
 
 int pause_menu(space[][ANCHO], int quit_game) {
-    
+
     int opcion;
     if (coord.y > THRESHOLD) { //&& npos.y < DISP_MAX_Y
         opcion = JUGAR;
@@ -152,3 +161,12 @@ int pause_menu(space[][ANCHO], int quit_game) {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
+int llamo_naves(juego_t* componentes, int ciclos)
+{
+    int conta=0;
+    //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
+    if (componentes->naves <)
+    
+    
+    return conta;
+}
