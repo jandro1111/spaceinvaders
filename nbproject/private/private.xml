@@ -7,12 +7,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/backend.h</file>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/Allegro_Frontend.c</file>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/raspi.h</file>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/backend.c</file>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/main.c</file>
-            <file>file:/home/jandro1111/NetBeansProjects/spaceinvaders/Raspi.c</file>
+            <file>file:/home/magali/Desktop/Progra2/spaceinvaders/backend.c</file>
+            <file>file:/home/magali/Desktop/Progra2/spaceinvaders/menu.c</file>
+            <file>file:/home/magali/Desktop/Progra2/spaceinvaders/Raspi.c</file>
+            <file>file:/home/magali/Desktop/Progra2/spaceinvaders/backend.h</file>
         </group>
     </open-files>
 </project-private>

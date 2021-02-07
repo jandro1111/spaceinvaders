@@ -176,8 +176,9 @@ int ciclonaves(void) {//mueva las naves en la matriz
 }
 ////////////////////////////////////////////////////////////////////////////////////////
 
-void nav_nod(void) { //spawnea nave nod y mueve nave nod
-    int i, j, haynavenod, num;
+int nav_nod(void) { //spawnea nave nod y mueve nave nod
+    static int haynavenod=0;
+    int i, j, num;
     int mov = DER;
     for (j = 0; j < ANCHO; ++j) {//me fijo si hay una nave nod en juego
         if (space[0][j] == NAVNOD) {
@@ -196,12 +197,14 @@ void nav_nod(void) { //spawnea nave nod y mueve nave nod
                 if (j == (ANCHO - 1)) {//si la nave nod esta al borde desaparece
                     space[i][j - 1] = 0;
                     space[i][j] = 0;
+                    haynavenod=0;
                 } else {
                     movmat(i, j, mov);
                 }
             }
         }
     }
+    return haynavenod;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 

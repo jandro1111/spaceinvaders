@@ -80,7 +80,7 @@ coord_t ciclodisp(juego_t*,int,int);//mueve disparos del player y el enemigo
 void verparams(juego_t*);//se fija si pasaste de nivel, cambia las naves para que puedas disparar
 void navdisp(void );//decide si dispara las naves, y spawnea nave nodriza
 void pmov(juego_t*); //recibe el input del jugador y mueve o dispara, o se mueve en el menu /pone pausa al juego
-void nav_nod (void);//spawnea y mueve nave nod
+int nav_nod (void);//spawnea y mueve nave nod
 void movmat (int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
 int getmat(int,int);//te dice que hay en esas coords de la matriz
 void playerdisp(int,int,int);//pone el disparo del player

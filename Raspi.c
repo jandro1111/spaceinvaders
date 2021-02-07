@@ -26,7 +26,7 @@ int main(void) {
 
     raspinit(); //inicializo los componentes de la raspi
 
-    int space[LARGO][ANCHO];    //CREO QUE NO ES NECESARIA, CAMBIAR FUNCIONES
+    int space[LARGO][ANCHO]; //CREO QUE NO ES NECESARIA, CAMBIAR FUNCIONES
 
     juego_t componentes;
     inigame(juego_t, 1); //mando el nivel 1, ver si hay que elegir nivel
@@ -38,6 +38,7 @@ int main(void) {
     int quit_game = 0;
     int nmadre = 0;
     int random;
+    int naves = 0;
     srand(time(NULL));
 
     //    dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
@@ -51,19 +52,22 @@ int main(void) {
         //nav_nod
         //coord_t ciclodisp(juego_t *juego, int i, int j)
         //
-        
+
         random = (rand() % 10) + 21; //numero entre 20 y 30
 
         if (random == ciclos) {
-            nmadre=1;
+            nmadre = 1;
         }
-        if (nmadre=1)
-        {
-            nav_nod; //ver como pararla
-        }
-        for (i = 0; i <= conta; i++) {
-            ciclonaves();
-            ciclos++;
+        naves = llamo_naves(&componentes, ciclos);
+
+        if (ciclos % naves == 0) {
+            for (i = 0; i <= conta; i++) {
+                ciclosnaves();
+            }
+            if (ciclos % 2 == 0 && nmadre == 1) {
+                nmadre = nav_nod();
+            }
+
             rasprint(space);
         }
 
@@ -74,13 +78,13 @@ int main(void) {
             } //do nothing 
         } else {
             if (coord.x > THRESHOLD) {
-                if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+                if (coord.y < THRESHOLD) {
                     pmov(4, &componentes);
                 } else {
                     pmov(1, &componentes);
                 }
             } else if (coord.x < -THRESHOLD) {
-                if (coord.y < -THRESHOLD) {
+                if (coord.y < THRESHOLD) {
                     pmov(5, &componentes);
                 } else {
                     pmov(2, &componentes);
@@ -93,6 +97,8 @@ int main(void) {
             //        }
             //    }
         }
+        ciclos++;
+
         if (componentes.naves == 0) {
             componentes.nivel++;
             matniv(space);
@@ -161,14 +167,13 @@ int pause_menu(space[][ANCHO], int quit_game) {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-int llamo_naves(juego_t* componentes, int ciclos)
-{
-    int conta=0;
+int llamo_naves(juego_t* componentes, int ciclos) {
+    int conta = 0;
     //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
     if (componentes->naves <)
-    
-    
-    return conta;
+
+
+        return conta;
 }
 /*
  * AL PRINCIPIO TENGO QUE LLAMARLO UNA CADA 2 O CADA 3 VECES QUE SE MUEVE EL JUGADOR
