@@ -58,18 +58,21 @@ int main(void) {
         if (random == ciclos) {
             nmadre = 1;
         }
+        
         naves = llamo_naves(&componentes, ciclos);
-
+        conta = llamo_naves(&componentes, ciclos);
+        
         if (ciclos % naves == 0) {
             for (i = 0; i <= conta; i++) {
                 ciclosnaves();
             }
-            if (ciclos % 2 == 0 && nmadre == 1) {
-                nmadre = nav_nod();
-            }
-
-            rasprint(space);
         }
+        if (ciclos % 2 == 0 && nmadre == 1) {
+            nmadre = nav_nod();
+        }
+
+        rasprint(space);
+
 
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
@@ -168,13 +171,23 @@ int pause_menu(space[][ANCHO], int quit_game) {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 int llamo_naves(juego_t* componentes, int ciclos) {
-    int conta = 0;
+    static int funcion = 1;
+    int conta=0;
     //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
-    if (componentes->naves <)
+    if (funcion%2 == 0)   //Cuantas veces llamo a la funcion que mueve a las naves enemigas
+    {
+        
+    }
+    else    //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
+    {
+        
+    }
 
 
         return conta;
 }
+
+
 /*
  * AL PRINCIPIO TENGO QUE LLAMARLO UNA CADA 2 O CADA 3 VECES QUE SE MUEVE EL JUGADOR
  * LA PUEDO LLAMAR SIEMPRE QUE SEA PAR O MULTIPLO DE 3 Y MAS ADELANTE AUMENTAR EL NUMERO ADENTRO DEL FOR PARA COMPENSAR
