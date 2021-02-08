@@ -173,7 +173,7 @@ void rasprint() {//es el printmat para raspi
                 } else {
                     dcoord_t myPoint = {i, j};
                     disp_write(myPoint, D_OFF);
-                    disparo = 1;
+                    disparo = 0;
                 }
 
             } else if (obj > 0 && obj != PSHOT && obj != ESHOT) {
