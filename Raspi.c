@@ -65,7 +65,7 @@ int main(void) {
 
         if (ciclos % naves == 0) {
             for (i = 0; i <= conta && quit_game=0; i++) {
-                quit_game=ciclosnaves();
+                quit_game= ciclonaves();
             }
         }
         if (ciclos % 2 == 0 && nmadre == 1) {
