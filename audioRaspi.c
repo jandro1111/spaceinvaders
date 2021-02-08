@@ -7,13 +7,8 @@
 
 #include "audioRaspi.h"
 
-/*
- * 
- */
-#include <SDL2/SDL.h>
-#include "audio.h"
 
-#define S2WAIT 180
+//CAMBIAR LOS .WAV
 
 #define DOOR1 "../sounds/door1.wav"
 #define DOOR2 "../sounds/door2.wav"

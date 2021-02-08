@@ -11,6 +11,8 @@
 #include <SDL2/SDL.h>
 #include "audio.h"
 
+#define S2WAIT 180
+
 enum status {
     NO_INIT,
     READY,
