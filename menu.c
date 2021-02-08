@@ -181,3 +181,9 @@ void printscore(int puntaje) {//imprime el puntaje
         }
     }
 }
+
+int get_menu(int i, int j)
+{
+    int dato;
+    return dato = space[i][j];
+}

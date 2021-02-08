@@ -36,7 +36,7 @@ int main(void) {
 
     coord_t evento;
 
-    int i, conta = 0, ciclos = 0, found=1;
+    int i, conta = 0, ciclos = 0, found = 1;
     int quit_game = 0;
     int nmadre = 0;
     int random;
@@ -72,59 +72,59 @@ int main(void) {
         if (ciclos % 2 == 0 && nmadre == 1) {
             nmadre = nav_nod();
         }
-        while (found!=0) //-> DONDE VA ? ADENTRO DEL FOR O AFUERA ?
+        while (found != 0) //-> DONDE VA ? ADENTRO DEL FOR O AFUERA ?
         {
             verparams();
-            found= control_audio (&componentes);
+            found = control_audio(&componentes);
         }
-}
-
-rasprint();
-
-
-if (joy_get_switch() == J_NOPRESS) {
-    while (joy_get_switch() != J_NOPRESS) {
-        quit_game = pause_menu();
-
-    } //do nothing 
-} else {
-    if (coord.x > THRESHOLD) {
-        if (coord.y < THRESHOLD) {
-            pmov(4, &componentes);
-        } else {
-            pmov(1, &componentes);
-        }
-    } else if (coord.x < -THRESHOLD) {
-        if (coord.y < THRESHOLD) {
-            pmov(5, &componentes);
-        } else {
-            pmov(2, &componentes);
-        }
-    } else if (coord.y > THRESHOLD) {
-        pmov(3, &componentes);
     }
-    //        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-    //            npos.y++;
-    //        }
-    //    }
-}
-ciclos++;
-rasprint();
 
-if (componentes.naves == 0) {
-    componentes.nivel++;
-    matniv();
-}
-if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
-    componentes.vidas++;
-    componentes.puntaje = 0;
-}
-if (componentes.vidas == 0 || quit_game = 1) {
-    printscore(componentes.puntaje);
-    usleep(3);
-    quit_game = pause_menu();
-    inigame(&componentes, 1); //inicializa en nivel 1
-}
+    rasprint();
+
+
+    if (joy_get_switch() == J_NOPRESS) {
+        while (joy_get_switch() != J_NOPRESS) {
+            quit_game = pause_menu();
+
+        } //do nothing 
+    } else {
+        if (coord.x > THRESHOLD) {
+            if (coord.y < THRESHOLD) {
+                pmov(4, &componentes);
+            } else {
+                pmov(1, &componentes);
+            }
+        } else if (coord.x < -THRESHOLD) {
+            if (coord.y < THRESHOLD) {
+                pmov(5, &componentes);
+            } else {
+                pmov(2, &componentes);
+            }
+        } else if (coord.y > THRESHOLD) {
+            pmov(3, &componentes);
+        }
+        //        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+        //            npos.y++;
+        //        }
+        //    }
+    }
+    ciclos++;
+    rasprint();
+
+    if (componentes.naves == 0) {
+        componentes.nivel++;
+        matniv();
+    }
+    if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
+        componentes.vidas++;
+        componentes.puntaje = 0;
+    }
+    if (componentes.vidas == 0 || quit_game = 1) {
+        printscore(componentes.puntaje);
+        usleep(3);
+        quit_game = pause_menu();
+        inigame(&componentes, 1); //inicializa en nivel 1
+    }
 }
 
 /* End Simple-SDL2-Audio */
@@ -153,12 +153,17 @@ void raspinit(void) {
 }
 /////////////////////////////////////////////////////////////
 
-void rasprint() {//es el printmat para raspi
+void rasprint(int matriz) {//es el printmat para raspi
     static int disparo = 0;
     int i, j, obj;
     for (i = 0; i < ANCHO; ++i) {//copia el contenido de la matriz en el buffer de leds
         for (j = 0; j < ANCHO; ++j) {
-            obj = getmat(i, j);
+            if (matriz == MENU) {
+                obj = get_menu(i, j);
+            } else {
+                obj = getmat(i, j);
+            }
+
             if (obj == PSHOT || obj == ESHOT) {//si no es 0 prende el led
                 if (disparo == 0) {
                     dcoord_t myPoint = {i, j};
@@ -228,7 +233,6 @@ int llamo_naves(juego_t* componentes, int naves) {
                 }
             }
 
-
             else {
                 conta = 1
             }
@@ -238,7 +242,7 @@ int llamo_naves(juego_t* componentes, int naves) {
         return conta;
     }
 
-        /*
+    /*
      * AL PRINCIPIO TENGO QUE LLAMARLO UNA CADA 2 O CADA 3 VECES QUE SE MUEVE EL JUGADOR
      * LA PUEDO LLAMAR SIEMPRE QUE SEA PAR O MULTIPLO DE 3 Y MAS ADELANTE AUMENTAR EL NUMERO ADENTRO DEL FOR PARA COMPENSAR
      * 
@@ -251,29 +255,25 @@ int llamo_naves(juego_t* componentes, int naves) {
      * TENGO QUE ACTUALIZAR EL DISPLAY CADA VEZ QUE MUEVO A LOS ENEMIGOS/BALAS/NAVE MADRE  (?)
      * TENGO QUE METER TODO ADENTRO DE UN FOR Y AHI HACER SEGUN SEA PAR O MULTIPLO DE X NUMERO
      */
-    int control_audio(juego_t* componentes) {
-        int found=1;
+    int control_audio(juego_t * componentes) {
+        int found = 1;
         for (i = 0; i < LARGO; i++) {
             for (j = 0; j < ANCHO; j++) {
                 evento = ciclodisp(&componentes, i, j);
                 if (evento.objeto == NAVE_ENEMIGA) {
                     //audio 1
-                    
+
                 } else if (evento.objeto == NAVE_NODRIZA) {
                     //audio 2
                 } else if (evento.objeto == JUGADOR) {
                     //audio 3
-                }
-                else if(evento.objeto == ESCUDO)
-                {
-                    
-                }
-                else
-                {
+                } else if (evento.objeto == ESCUDO) {
+
+                } else {
                     found = 0;
                 }
             }
         }
-        
+
         return found;
     }
