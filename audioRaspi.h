@@ -8,7 +8,28 @@
 #ifndef AUDIORASPI_H
 #define AUDIORASPI_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
+enum status {
+    NO_INIT,
+    READY,
+    STOPPED,
+    PLAYING,
+    PAUSED,
+    FINISHED
+};
+
+void debug_status();
+
+int play_sound(void);
+int pause_sound(void);
+int end_play(void);
+int player_status(void);
+int init_sound(void);
+int set_file_to_play(const char *music_path);
+int stop_sound(void);
 
 #endif
 

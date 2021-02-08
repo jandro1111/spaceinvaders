@@ -64,30 +64,25 @@ int main(void) {
         conta = llamo_naves(&componentes, ciclos);
 
         if (ciclos % naves == 0) {
-            for (i = 0; i <= conta && quit_game=0; i++) {
-                quit_game= ciclonaves();
+            for (i = 0; i <= conta && quit_game = 0; i++) {
+                quit_game = ciclonaves();
             }
         }
         if (ciclos % 2 == 0 && nmadre == 1) {
             nmadre = nav_nod();
         }
-//while (evento.objeto != NADA)  -> DONDE VA? ADENTRO DEL FOR O AFUERA?
+        //while (evento.objeto != NADA)  -> DONDE VA? ADENTRO DEL FOR O AFUERA?
         for (i = 0; i < LARGO; i++) {
             for (j = 0; j < ANCHO; j++) {
                 evento = ciclodisp(&componentes, i, j);
-                if (evento.objeto==NAVE_ENEMIGA)
-                {
+                if (evento.objeto == NAVE_ENEMIGA) {
                     //audio 1
-                }
-                else if (evento.objeto==NAVE_NODRIZA)
-                {
+                } else if (evento.objeto == NAVE_NODRIZA) {
                     //audio 2
-                }
-                else if (evento.objeto==JUGADOR)
-                {
+                } else if (evento.objeto == JUGADOR) {
                     //audio 3
                 }
-                
+
             }
         }
 
@@ -96,7 +91,7 @@ int main(void) {
 
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
-                quit_game=pause_menu();
+                quit_game = pause_menu();
 
             } //do nothing 
         } else {
@@ -130,13 +125,22 @@ int main(void) {
             componentes.vidas++;
             componentes.puntaje = 0;
         }
-        if (componentes.vidas == 0 || quit_game=1) {
+        if (componentes.vidas == 0 || quit_game = 1) {
             printscore(componentes.puntaje);
             usleep(3);
-            quit_game=pause_menu();
+            quit_game = pause_menu();
             inigame(&componentes, 1); //inicializa en nivel 1
         }
     }
+
+    /* End Simple-SDL2-Audio */
+    endAudio();
+
+    /* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
+    freeAudio(sound);
+    freeAudio(music);
+
+    return 0;
 }
 /////////////////////////
 /*
