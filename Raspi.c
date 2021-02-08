@@ -24,6 +24,7 @@
 #define THRESHOLD 40 //Límite a partir del cual se mueve el LED encendido
 #define JUGAR 5 //Uso 5 y 12, porque son las posiciones en las que se encuentra el puntero
 #define TERMINA 12
+#define MAX_ENEM 16
 
 int main(void) {
 
@@ -35,7 +36,7 @@ int main(void) {
 
     coord_t evento;
 
-    int i, conta = 0, ciclos = 0;
+    int i, conta = 0, ciclos = 0, found=1;
     int quit_game = 0;
     int nmadre = 0;
     int random;
@@ -60,8 +61,8 @@ int main(void) {
             nmadre = 1;
         }
 
-        naves = llamo_naves(&componentes, ciclos, naves);  //Cada cuantos ciclos muevo a los enemigos
-        conta = llamo_naves(&componentes, ciclos, naves);  //Cuantas veces muevo a los enemigos por ciclo
+        naves = llamo_naves(&componentes, ciclos, naves); //Cada cuantos ciclos muevo a los enemigos
+        conta = llamo_naves(&componentes, ciclos, naves); //Cuantas veces muevo a los enemigos por ciclo
 
         if (ciclos % naves == 0) {
             for (i = 0; i <= conta && quit_game = 0; i++) {
@@ -71,78 +72,69 @@ int main(void) {
         if (ciclos % 2 == 0 && nmadre == 1) {
             nmadre = nav_nod();
         }
-        //while (evento.objeto != NADA)  -> DONDE VA? ADENTRO DEL FOR O AFUERA?
-        for (i = 0; i < LARGO; i++) {
-            for (j = 0; j < ANCHO; j++) {
-                evento = ciclodisp(&componentes, i, j);
-                if (evento.objeto == NAVE_ENEMIGA) {
-                    //audio 1
-                    //verparams
-                } else if (evento.objeto == NAVE_NODRIZA) {
-                    //audio 2
-                } else if (evento.objeto == JUGADOR) {
-                    //audio 3
-                }
-
-            }
+        while (found!=0) //-> DONDE VA ? ADENTRO DEL FOR O AFUERA ?
+        {
+            verparams();
+            found= control_audio (&componentes);
         }
+}
 
-        rasprint();
+rasprint();
 
 
-        if (joy_get_switch() == J_NOPRESS) {
-            while (joy_get_switch() != J_NOPRESS) {
-                quit_game = pause_menu();
+if (joy_get_switch() == J_NOPRESS) {
+    while (joy_get_switch() != J_NOPRESS) {
+        quit_game = pause_menu();
 
-            } //do nothing 
+    } //do nothing 
+} else {
+    if (coord.x > THRESHOLD) {
+        if (coord.y < THRESHOLD) {
+            pmov(4, &componentes);
         } else {
-            if (coord.x > THRESHOLD) {
-                if (coord.y < THRESHOLD) {
-                    pmov(4, &componentes);
-                } else {
-                    pmov(1, &componentes);
-                }
-            } else if (coord.x < -THRESHOLD) {
-                if (coord.y < THRESHOLD) {
-                    pmov(5, &componentes);
-                } else {
-                    pmov(2, &componentes);
-                }
-            } else if (coord.y > THRESHOLD) {
-                pmov(3, &componentes);
-            }
-            //        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
-            //            npos.y++;
-            //        }
-            //    }
+            pmov(1, &componentes);
         }
-        ciclos++;
-        rasprint();
-
-        if (componentes.naves == 0) {
-            componentes.nivel++;
-            matniv();
+    } else if (coord.x < -THRESHOLD) {
+        if (coord.y < THRESHOLD) {
+            pmov(5, &componentes);
+        } else {
+            pmov(2, &componentes);
         }
-        if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
-            componentes.vidas++;
-            componentes.puntaje = 0;
-        }
-        if (componentes.vidas == 0 || quit_game = 1) {
-            printscore(componentes.puntaje);
-            usleep(3);
-            quit_game = pause_menu();
-            inigame(&componentes, 1); //inicializa en nivel 1
-        }
+    } else if (coord.y > THRESHOLD) {
+        pmov(3, &componentes);
     }
+    //        if (coord.y < -THRESHOLD && npos.y < DISP_MAX_Y) {
+    //            npos.y++;
+    //        }
+    //    }
+}
+ciclos++;
+rasprint();
 
-    /* End Simple-SDL2-Audio */
-    endAudio();
+if (componentes.naves == 0) {
+    componentes.nivel++;
+    matniv();
+}
+if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
+    componentes.vidas++;
+    componentes.puntaje = 0;
+}
+if (componentes.vidas == 0 || quit_game = 1) {
+    printscore(componentes.puntaje);
+    usleep(3);
+    quit_game = pause_menu();
+    inigame(&componentes, 1); //inicializa en nivel 1
+}
+}
 
-    /* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
-    freeAudio(sound);
-    freeAudio(music);
+/* End Simple-SDL2-Audio */
+endAudio();
 
-    return 0;
+/* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
+freeAudio(sound);
+freeAudio(music);
+
+return 0;
 }
 /////////////////////////
 /*
@@ -208,41 +200,80 @@ int pause_menu() {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-int llamo_naves(juego_t* componentes, int ciclos, int naves) {
+int llamo_naves(juego_t* componentes, int naves) {
     static int funcion = 1;
+    static int p = 0;
     int conta = 0;
-    int p=0;
-    componentes->nivel>=5?p=5:p=componentes->naves;
+    int cantidad = MAX_ENEM - componentes->naves;
+
+    componentes->nivel >= 4 ? p = 4 : p = componentes->naves;
+
     //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
     if (funcion % 2 == 0) //Cuantas veces llamo a la funcion que mueve a las naves enemigas
     {
-        if (naves > 1)
+        if (naves > 1) {
+            conta = 1;
+        } else {
+            if ((componentes->naves % 4) == 0) {
+                conta = (cantidad / 4);
+            }
+
+        } else //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
         {
-            conta=1;
+            (conta = 6 - p)
+            if (conta > 1 && p >= 1) {
+                if ((cantidad % 4) || ciclos % 5 == 0) {
+                    conta--;
+                    p--;
+                }
+            }
+
+
+            else {
+                conta = 1
+            }
         }
-        else{
-            
-        }
-    } else //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
-    {
-        
+
+
+        return conta;
     }
 
-
-    return conta;
-}
-
-
-/*
- * AL PRINCIPIO TENGO QUE LLAMARLO UNA CADA 2 O CADA 3 VECES QUE SE MUEVE EL JUGADOR
- * LA PUEDO LLAMAR SIEMPRE QUE SEA PAR O MULTIPLO DE 3 Y MAS ADELANTE AUMENTAR EL NUMERO ADENTRO DEL FOR PARA COMPENSAR
- * 
- * 
- * 
- * LA NAVE MADRE SE LLAMA CADA 2 DE JUGADOR
- * 
- * LAS BALAS SE LLAMAN 3 O 4 VECES POR MOV DE JUGADOR
- *  
- * TENGO QUE ACTUALIZAR EL DISPLAY CADA VEZ QUE MUEVO A LOS ENEMIGOS/BALAS/NAVE MADRE  (?)
- * TENGO QUE METER TODO ADENTRO DE UN FOR Y AHI HACER SEGUN SEA PAR O MULTIPLO DE X NUMERO
- */
+        /*
+     * AL PRINCIPIO TENGO QUE LLAMARLO UNA CADA 2 O CADA 3 VECES QUE SE MUEVE EL JUGADOR
+     * LA PUEDO LLAMAR SIEMPRE QUE SEA PAR O MULTIPLO DE 3 Y MAS ADELANTE AUMENTAR EL NUMERO ADENTRO DEL FOR PARA COMPENSAR
+     * 
+     * 
+     * 
+     * LA NAVE MADRE SE LLAMA CADA 2 DE JUGADOR
+     * 
+     * LAS BALAS SE LLAMAN 3 O 4 VECES POR MOV DE JUGADOR
+     *  
+     * TENGO QUE ACTUALIZAR EL DISPLAY CADA VEZ QUE MUEVO A LOS ENEMIGOS/BALAS/NAVE MADRE  (?)
+     * TENGO QUE METER TODO ADENTRO DE UN FOR Y AHI HACER SEGUN SEA PAR O MULTIPLO DE X NUMERO
+     */
+    int control_audio(juego_t* componentes) {
+        int found=1;
+        for (i = 0; i < LARGO; i++) {
+            for (j = 0; j < ANCHO; j++) {
+                evento = ciclodisp(&componentes, i, j);
+                if (evento.objeto == NAVE_ENEMIGA) {
+                    //audio 1
+                    
+                } else if (evento.objeto == NAVE_NODRIZA) {
+                    //audio 2
+                } else if (evento.objeto == JUGADOR) {
+                    //audio 3
+                }
+                else if(evento.objeto == ESCUDO)
+                {
+                    
+                }
+                else
+                {
+                    found = 0;
+                }
+            }
+        }
+        
+        return found;
+    }
