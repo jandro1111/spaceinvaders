@@ -21,12 +21,13 @@ extern "C" {
 #ifdef RASPI  
 #define LARGO 16 //el largo de la matriz
 #define ANCHO 16
+#define SEPARACION 4 // Separacion entre enemigos por fila en raspi
 #else 
 #define LARGO 98 //el largo de la matriz
 #define ANCHO 49
+#define SEPARACION 9 // Separacion entre enemegios por fila para allegro
 #endif
-#define SEP_AL 9 // Separacion entre enemegios por fila para allegro
-#define SEP_RASP 4 // Separacion entre enemigos por fila en raspi
+
 #define ENEMY 1 //despues agrego mas tipos de naves
 #define ENEMY_2 2 
 #define ENEMY_3 3

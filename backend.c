@@ -423,7 +423,7 @@ void crear_enemigo(int nivel) {
     }
 
     for (i = nivel; i < (nivel + 3); i += 2) {
-        for (j = 1; j < ANCHO; j += SEP_RASP) {//seteo enemigos
+        for (j = 1; j < ANCHO; j += SEPARACION) {//seteo enemigos
             if (i == nivel) {
                 space[i][j] = ENEMY_3;
             } else {
@@ -438,7 +438,7 @@ void crear_enemigo(int nivel) {
         }
     }
     for (i = (nivel + 4); i < (nivel + 5); ++i) {
-        for (j = 1; j < ANCHO; j += SEP_RASP) {
+        for (j = 1; j < ANCHO; j += SEPARACION) {
             space[i][j] = ENEMYSHOT;
         }
     }

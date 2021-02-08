@@ -39,7 +39,7 @@ int main(void) {
     int quit_game = 0;
     int nmadre = 0;
     int random;
-    int naves = 0;
+    int naves = 1;
     srand(time(NULL));
 
     //    dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
@@ -60,8 +60,8 @@ int main(void) {
             nmadre = 1;
         }
 
-        naves = llamo_naves(&componentes, ciclos);  //Cada cuantos ciclos muevo a los enemigos
-        conta = llamo_naves(&componentes, ciclos);  //Cuantas veces muevo a los enemigos por ciclo
+        naves = llamo_naves(&componentes, ciclos, naves);  //Cada cuantos ciclos muevo a los enemigos
+        conta = llamo_naves(&componentes, ciclos, naves);  //Cuantas veces muevo a los enemigos por ciclo
 
         if (ciclos % naves == 0) {
             for (i = 0; i <= conta && quit_game = 0; i++) {
@@ -208,16 +208,24 @@ int pause_menu() {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-int llamo_naves(juego_t* componentes, int ciclos) {
+int llamo_naves(juego_t* componentes, int ciclos, int naves) {
     static int funcion = 1;
     int conta = 0;
+    int p=0;
+    componentes->nivel>=5?p=5:p=componentes->naves;
     //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
     if (funcion % 2 == 0) //Cuantas veces llamo a la funcion que mueve a las naves enemigas
     {
-
+        if (naves > 1)
+        {
+            conta=1;
+        }
+        else{
+            
+        }
     } else //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
     {
-
+        
     }
 
 
