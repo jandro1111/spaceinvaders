@@ -160,16 +160,33 @@ void raspinit(void) {
 /////////////////////////////////////////////////////////////
 
 void rasprint() {//es el printmat para raspi
+    static int disparo=0;
     int i, j, obj;
     for (i = 0; i < ANCHO; ++i) {//copia el contenido de la matriz en el buffer de leds
         for (j = 0; j < ANCHO; ++j) {
             obj = getmat(i, j);
-            if (obj > 0) {//si no es 0 prende el led
+            if (obj == PSHOT || obj == ESHOT) {//si no es 0 prende el led
+                if (disparo == 0)
+                {
+                    dcoord_t myPoint = {i, j};
+                disp_write(myPoint, D_ON);
+                disparo=1;
+                }
+                else{
+                     dcoord_t myPoint = {i, j};
+                disp_write(myPoint, D_OFF);
+                disparo=1;
+                }
+                    
+            }
+            else if(obj > 0 && obj != PSHOT && obj != ESHOT)
+            {
                 dcoord_t myPoint = {i, j};
                 disp_write(myPoint, D_ON);
-            } else {//lo apaga
+            }
+            else {//lo apaga
                 dcoord_t myPoint = {i, j};
-                disp_write(myPoint, D_ON);
+                disp_write(myPoint, D_OFF);
             }
         }
     }
