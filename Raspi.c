@@ -43,6 +43,7 @@ int main(void) {
     int nmadre = 0;
     int random;
     int naves = 1;
+    int get_disp=0;
     srand(time(NULL));
 
     //    dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
@@ -57,10 +58,20 @@ int main(void) {
         //coord_t ciclodisp(juego_t *juego, int i, int j)
         //numero random para nav disp
 
-        random = (rand() % 10) + 21; //numero entre 20 y 30
-
+        if (ciclos < 20)
+        {
+            random = (rand() % 10) + 21; //numero entre 20 y 30
+        }
         if (random == ciclos) {
             nmadre = 1;
+            random+= (rand() % 10) + 21;
+        }
+        
+        get_disp+= (rand()%4); //suma numeros del 0 al 3 para conseguir el disparo de los enemigos
+        
+        if (ciclos == get_disp)
+        {
+            navdisp();
         }
 
         naves = llamo_naves(&componentes, ciclos, naves); //Cada cuantos ciclos muevo a los enemigos
@@ -116,10 +127,11 @@ int main(void) {
 
     if (componentes.naves == 0) {
         componentes.nivel++;
+        ciclos=0;
         matniv();
         rasprint(MENU);
     }
-    if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
+    if (componentes.puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
         componentes.vidas++;
         componentes.puntaje = 0;
     }
