@@ -12,6 +12,9 @@
 #include "termlib.h"
 #include "disdrv.h"
 #include "backend.h"
+#include "menu.h"
+#include "libaudio.h"
+#include "audioRaspi.h"
 
 /*
  * 

@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/Allegro_Frontend.o \
 	${OBJECTDIR}/Raspi.o \
+	${OBJECTDIR}/audioRaspi.o \
 	${OBJECTDIR}/backend.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/menu.o
@@ -75,6 +76,11 @@ ${OBJECTDIR}/Raspi.o: Raspi.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Raspi.o Raspi.c
+
+${OBJECTDIR}/audioRaspi.o: audioRaspi.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/audioRaspi.o audioRaspi.c
 
 ${OBJECTDIR}/backend.o: backend.c
 	${MKDIR} -p ${OBJECTDIR}
