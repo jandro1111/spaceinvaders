@@ -8,9 +8,8 @@
 #ifndef AUDIORASPI_H
 #define AUDIORASPI_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+#include <SDL2/SDL.h>
+#include "audio.h"
 
 enum status {
     NO_INIT,
