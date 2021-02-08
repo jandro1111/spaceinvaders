@@ -52,7 +52,7 @@ int main(void) {
         //ciclo naves
         //nav_nod
         //coord_t ciclodisp(juego_t *juego, int i, int j)
-        //
+        //numero random para nav disp
 
         random = (rand() % 10) + 21; //numero entre 20 y 30
 
@@ -60,8 +60,8 @@ int main(void) {
             nmadre = 1;
         }
 
-        naves = llamo_naves(&componentes, ciclos);
-        conta = llamo_naves(&componentes, ciclos);
+        naves = llamo_naves(&componentes, ciclos);  //Cada cuantos ciclos muevo a los enemigos
+        conta = llamo_naves(&componentes, ciclos);  //Cuantas veces muevo a los enemigos por ciclo
 
         if (ciclos % naves == 0) {
             for (i = 0; i <= conta && quit_game = 0; i++) {
@@ -77,6 +77,7 @@ int main(void) {
                 evento = ciclodisp(&componentes, i, j);
                 if (evento.objeto == NAVE_ENEMIGA) {
                     //audio 1
+                    //verparams
                 } else if (evento.objeto == NAVE_NODRIZA) {
                     //audio 2
                 } else if (evento.objeto == JUGADOR) {
@@ -116,6 +117,7 @@ int main(void) {
             //    }
         }
         ciclos++;
+        rasprint();
 
         if (componentes.naves == 0) {
             componentes.nivel++;

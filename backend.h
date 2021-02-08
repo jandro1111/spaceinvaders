@@ -71,7 +71,6 @@ typedef struct{
 }juego_t;
 ///////////////////////////////////////////
 void getcoordp(juego_t*);
-void exit_cond(int *,int *,int *);//si te quedas sin vidas te lleva al menu
 void inimat (void);//inicializa la matriz en 0
 void printmat (void);//imprime la matriz (testeo)
 void ininiv(int);//se fija en que nivel estas y carga cierto patron de naves, pone los escudos y la nave del player
