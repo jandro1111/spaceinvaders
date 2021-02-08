@@ -11,10 +11,10 @@
 #define LARGO 16 
 #define ANCHO 16
 
-void menu (int[][ANCHO]);//para raspi printea el menu
-void printscore(int [][ANCHO],int );//para raspi escribe el puntaje
-void printnum(int [][ANCHO],int,int[]);//funcion local para printscore
-void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
+void menu (int opcion);//para raspi printea el menu
+void printscore(int puntaje);//para raspi escribe el puntaje
+void printnum(int num,int digit[]);//funcion local para printscore
+void matniv(void);//para raspi, esccribe level up en la matriz
 
 #endif
 
