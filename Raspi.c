@@ -25,6 +25,8 @@
 #define JUGAR 5 //Uso 5 y 12, porque son las posiciones en las que se encuentra el puntero
 #define TERMINA 12
 #define MAX_ENEM 16
+#define MENU 2
+#define GAME 1
 
 int main(void) {
 
@@ -74,19 +76,20 @@ int main(void) {
         }
         while (found != 0) //-> DONDE VA ? ADENTRO DEL FOR O AFUERA ?
         {
+            found = control_audio(&componentes, &nmadre);
             verparams();
-            found = control_audio(&componentes);
         }
     }
 
-    rasprint();
+    rasprint(GAME);
 
 
     if (joy_get_switch() == J_NOPRESS) {
         while (joy_get_switch() != J_NOPRESS) {
             quit_game = pause_menu();
+            rasprint(MENU);
 
-        } //do nothing 
+        } 
     } else {
         if (coord.x > THRESHOLD) {
             if (coord.y < THRESHOLD) {
@@ -109,11 +112,12 @@ int main(void) {
         //    }
     }
     ciclos++;
-    rasprint();
+    rasprint(GAME);
 
     if (componentes.naves == 0) {
         componentes.nivel++;
         matniv();
+        rasprint(MENU);
     }
     if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
         componentes.vidas++;
@@ -121,11 +125,18 @@ int main(void) {
     }
     if (componentes.vidas == 0 || quit_game = 1) {
         printscore(componentes.puntaje);
+        rasprint(MENU);
         usleep(3);
-        quit_game = pause_menu();
         inigame(&componentes, 1); //inicializa en nivel 1
+        
+        while (joy_get_switch() != J_NOPRESS) {
+            quit_game = pause_menu();
+            rasprint(MENU);
+
+        } 
+        
     }
-}
+
 
 /* End Simple-SDL2-Audio */
 endAudio();
@@ -255,7 +266,7 @@ int llamo_naves(juego_t* componentes, int naves) {
      * TENGO QUE ACTUALIZAR EL DISPLAY CADA VEZ QUE MUEVO A LOS ENEMIGOS/BALAS/NAVE MADRE  (?)
      * TENGO QUE METER TODO ADENTRO DE UN FOR Y AHI HACER SEGUN SEA PAR O MULTIPLO DE X NUMERO
      */
-    int control_audio(juego_t * componentes) {
+    int control_audio(juego_t * componentes, int* nmadre) {
         int found = 1;
         for (i = 0; i < LARGO; i++) {
             for (j = 0; j < ANCHO; j++) {
@@ -265,6 +276,7 @@ int llamo_naves(juego_t* componentes, int naves) {
 
                 } else if (evento.objeto == NAVE_NODRIZA) {
                     //audio 2
+                    *nmadre=0;
                 } else if (evento.objeto == JUGADOR) {
                     //audio 3
                 } else if (evento.objeto == ESCUDO) {
