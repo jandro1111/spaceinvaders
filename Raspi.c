@@ -29,8 +29,6 @@ int main(void) {
 
     raspinit(); //inicializo los componentes de la raspi
 
-    int space[LARGO][ANCHO]; //CREO QUE NO ES NECESARIA, CAMBIAR FUNCIONES
-
     juego_t componentes;
     inigame(juego_t, 1); //mando el nivel 1, ver si hay que elegir nivel
     inimat();
@@ -93,12 +91,12 @@ int main(void) {
             }
         }
 
-        rasprint(space);
+        rasprint();
 
 
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
-                quit_game=pause_menu(space);
+                quit_game=pause_menu();
 
             } //do nothing 
         } else {
@@ -126,16 +124,16 @@ int main(void) {
 
         if (componentes.naves == 0) {
             componentes.nivel++;
-            matniv(space);
+            matniv();
         }
         if (puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
             componentes.vidas++;
             componentes.puntaje = 0;
         }
         if (componentes.vidas == 0 || quit_game=1) {
-            printscore(space, componentes.puntaje);
+            printscore(componentes.puntaje);
             usleep(3);
-            quit_game=pause_menu(space);
+            quit_game=pause_menu();
             inigame(&componentes, 1); //inicializa en nivel 1
         }
     }
@@ -157,7 +155,7 @@ void raspinit(void) {
 }
 /////////////////////////////////////////////////////////////
 
-void rasprint(int space [][ANCHO]) {//es el printmat para raspi
+void rasprint() {//es el printmat para raspi
     int i, j, obj;
     for (i = 0; i < ANCHO; ++i) {//copia el contenido de la matriz en el buffer de leds
         for (j = 0; j < ANCHO; ++j) {
@@ -175,17 +173,17 @@ void rasprint(int space [][ANCHO]) {//es el printmat para raspi
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int pause_menu(space[][ANCHO]) {
+int pause_menu() {
 
     int opcion;
     if (coord.y > THRESHOLD) { //&& npos.y < DISP_MAX_Y
         opcion = JUGAR;
-        menu(space, opcion);
+        menu(opcion);
         quit_game = 0;
     } else if (coord.y > -THRESHOLD) {
         quit_game = 1;
         opcion = TERMINA;
-        menu(space, opcion);
+        menu(opcion);
     }
     return quit_game;
 }

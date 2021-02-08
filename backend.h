@@ -17,7 +17,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#define RASPI
+
 #ifdef RASPI  
 #define LARGO 16 //el largo de la matriz
 #define ANCHO 16

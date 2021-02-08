@@ -10,10 +10,12 @@
 #include <stdint.h>
 #include "menu.h"
 
+static int space[LARGO][ANCHO];
+
 /*
  * 
  */
-void menu(int space[][ANCHO],int opcion){//para allegro hacer otra cosa, escribe el simbolo de play o end
+void menu(int opcion){//para allegro hacer otra cosa, escribe el simbolo de play o end
     if(opcion != 5 && opcion != 12)
     {
         return;
@@ -34,7 +36,7 @@ void menu(int space[][ANCHO],int opcion){//para allegro hacer otra cosa, escribe
     space[opcion][0]=space[5][1]=1;//escribo el puntero en 5 o 12 segun corresponda
 }
 
-void matniv(int space[][ANCHO]) {// escribe LV UP
+void matniv(void) {// escribe LV UP
     int i = 0;
     for (i = 4; i < 8; ++i) {
         switch (i) {
@@ -58,7 +60,7 @@ void matniv(int space[][ANCHO]) {// escribe LV UP
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-void printnum(int space [][ANCHO], int num, int digit[]) {//imprimi un digito en la pos correspondiente
+void printnum(int num, int digit[]) {//imprimi un digito en la pos correspondiente
     int a, b, c, d;
     a = digit[0];
     b = digit[1];
@@ -123,7 +125,7 @@ void printnum(int space [][ANCHO], int num, int digit[]) {//imprimi un digito en
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void printscore(int space[][ANCHO], int puntaje) {//imprime el puntaje
+void printscore(int puntaje) {//imprime el puntaje
     int num = 0; //aisla digitos para pasar a matriz
     inimat();
     int auxmat [4]; //para determinar que cols usar degun el digito
@@ -158,21 +160,21 @@ void printscore(int space[][ANCHO], int puntaje) {//imprime el puntaje
                 auxmat[1] = 14;
                 auxmat[2] = 13;
                 auxmat[3] = 12;
-                printnum(space, num, auxmat);
+                printnum(num, auxmat);
                 break;
             case 1:
                 auxmat[0] = 9;
                 auxmat[1] = 8;
                 auxmat[2] = 7;
                 auxmat[3] = 6;
-                printnum(space, num, auxmat);
+                printnum(num, auxmat);
                 break;
             case 2:
                 auxmat[0] = 3;
                 auxmat[1] = 2;
                 auxmat[2] = 1;
                 auxmat[3] = 0;
-                printnum(space, num, auxmat);
+                printnum(num, auxmat);
                 break;
             default:
                 break;
