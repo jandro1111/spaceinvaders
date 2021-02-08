@@ -12,6 +12,11 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <itemPath>disparo.wav</itemPath>
+      <itemPath>game over.wav</itemPath>
+      <itemPath>nave impacto.wav</itemPath>
+      <itemPath>shoot.wav</itemPath>
+      <itemPath>ufo_highpitch.wav</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -57,13 +62,23 @@
       </item>
       <item path="backend.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="disparo.wav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="game over.wav" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="nave impacto.wav" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="raspi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shoot.wav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ufo_highpitch.wav" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -98,13 +113,23 @@
       </item>
       <item path="backend.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="disparo.wav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="game over.wav" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="nave impacto.wav" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="raspi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="shoot.wav" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ufo_highpitch.wav" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
