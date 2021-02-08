@@ -58,17 +58,36 @@ int main(void) {
         if (random == ciclos) {
             nmadre = 1;
         }
-        
+
         naves = llamo_naves(&componentes, ciclos);
         conta = llamo_naves(&componentes, ciclos);
-        
+
         if (ciclos % naves == 0) {
-            for (i = 0; i <= conta; i++) {
-                ciclosnaves();
+            for (i = 0; i <= conta && quit_game=0; i++) {
+                quit_game=ciclosnaves();
             }
         }
         if (ciclos % 2 == 0 && nmadre == 1) {
             nmadre = nav_nod();
+        }
+//while (evento.objeto != NADA)  -> DONDE VA? ADENTRO DEL FOR O AFUERA?
+        for (i = 0; i < LARGO; i++) {
+            for (j = 0; j < ANCHO; j++) {
+                evento = ciclodisp(&componentes, i, j);
+                if (evento.objeto==NAVE_ENEMIGA)
+                {
+                    //audio 1
+                }
+                else if (evento.objeto==NAVE_NODRIZA)
+                {
+                    //audio 2
+                }
+                else if (evento.objeto==JUGADOR)
+                {
+                    //audio 3
+                }
+                
+            }
         }
 
         rasprint(space);
@@ -76,7 +95,7 @@ int main(void) {
 
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
-                pause_menu(space, quit_game);
+                quit_game=pause_menu(space);
 
             } //do nothing 
         } else {
@@ -110,10 +129,10 @@ int main(void) {
             componentes.vidas++;
             componentes.puntaje = 0;
         }
-        if (componentes.vidas == 0) {
+        if (componentes.vidas == 0 || quit_game=1) {
             printscore(space, componentes.puntaje);
             usleep(3);
-            pause_menu(space, quit_game);
+            quit_game=pause_menu(space);
             inigame(&componentes, 1); //inicializa en nivel 1
         }
     }
@@ -153,7 +172,7 @@ void rasprint(int space [][ANCHO]) {//es el printmat para raspi
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-int pause_menu(space[][ANCHO], int quit_game) {
+int pause_menu(space[][ANCHO]) {
 
     int opcion;
     if (coord.y > THRESHOLD) { //&& npos.y < DISP_MAX_Y
@@ -172,19 +191,18 @@ int pause_menu(space[][ANCHO], int quit_game) {
 
 int llamo_naves(juego_t* componentes, int ciclos) {
     static int funcion = 1;
-    int conta=0;
+    int conta = 0;
     //A TENER EN CUENTA nivel, cant de naves, catidad de veces que llame a la funcion
-    if (funcion%2 == 0)   //Cuantas veces llamo a la funcion que mueve a las naves enemigas
+    if (funcion % 2 == 0) //Cuantas veces llamo a la funcion que mueve a las naves enemigas
     {
-        
-    }
-    else    //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
+
+    } else //Cada cuantos ciclos llamo a la funcion que mueve a las naves enemigas
     {
-        
+
     }
 
 
-        return conta;
+    return conta;
 }
 
 
