@@ -185,6 +185,8 @@ int main(void) {
             componentes.nivel++;        //Aumento de nivel    
             ciclos = 0;                 //Reinicio los ciclos
             matniv();                   //Mando a imprimir LV UP
+            random = (rand() % 10) + 21;//numero entre 20 y 30
+            get_disp = (rand() % 6);    //numero entre 0 y 5
             rasprint(MENU);
         }
         if (componentes.puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
@@ -197,6 +199,8 @@ int main(void) {
             usleep(3);
             ciclos = 0;
             inigame(&componentes, 1); //inicializa en nivel 1
+            random = (rand() % 10) + 21; //numero entre 20 y 30
+            get_disp = (rand() % 6); //numero entre 0 y 5            
 
             while (joy_get_switch() != J_NOPRESS) {
                 quit_game = pause_menu();
