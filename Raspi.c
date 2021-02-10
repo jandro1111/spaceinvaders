@@ -158,7 +158,7 @@ int main(void) {
         } else {
             //MOVIMIENTOS DEL JUGADOR
             if (coord.x > THRESHOLD) {      //Dereceha 
-                if (coord.y < THRESHOLD) {  // y arriba
+                if (coord.y > THRESHOLD) {  // y arriba
                     componentes.mov = 4;    // me muevo a la derecha y disparo
                     pmov(&componentes);     //Llamo a la funcion que realiza el movimiento
                 } else {
@@ -166,7 +166,7 @@ int main(void) {
                     pmov(&componentes);
                 }
             } else if (coord.x < -THRESHOLD) {  //Izquierda
-                if (coord.y < THRESHOLD) {      // y arriba, dispara y se mueve
+                if (coord.y > THRESHOLD) {      // y arriba, dispara y se mueve
                     componentes.mov = 5;
                     pmov(&componentes);
                 } else {
@@ -208,10 +208,10 @@ int main(void) {
         }
     }
     /*
-    /* End Simple-SDL2-Audio 
+    End Simple-SDL2-Audio 
     endAudio();
 
-    /* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still 
+    Important to free audio after ending Simple-SDL2-Audio because they might be referenced still 
     freeAudio(sound);
     freeAudio(music);
 
@@ -297,7 +297,7 @@ int pause_menu(void) {
         opcion = JUGAR; // selecciona la opcion JUGAR
         menu(opcion); // lo mando al menu
         quit_game = 0; // y marco que se decidio seguir jugando 
-    } else if (coord.y > -THRESHOLD) { //Caso contrario, hago lo mismo pero 
+    } else if (coord.y < -THRESHOLD) { //Caso contrario, hago lo mismo pero 
         quit_game = 1; // marco la opcion de salir
         opcion = TERMINA;
         menu(opcion);
