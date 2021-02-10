@@ -13,4 +13,12 @@ void raspinit(void);//inicializa librerias
 void printscore(int [][ANCHO],int );//para raspi escribe el puntaje
 void printnum(int [][ANCHO],int,int[]);//funcion local para printscore
 void matniv(int [][ANCHO]);//para raspi, esccribe level up en la matriz
+
+
 #endif
+
+
+{0,1,0,1,0},
+{1,0,1,0,1},
+{0,1,0,1,0},
+{0,0,1,0,0}, 

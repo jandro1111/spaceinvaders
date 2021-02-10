@@ -10,6 +10,9 @@
 #include <stdint.h>
 #include "menu.h"
 
+#define LARGO 16 
+#define ANCHO 16
+
 static int space[LARGO][ANCHO];
 
 /*

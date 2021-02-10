@@ -8,9 +8,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#define LARGO 16 
-#define ANCHO 16
-
 void menu (int opcion);//para raspi printea el menu
 void printscore(int puntaje);//para raspi escribe el puntaje
 void printnum(int num,int digit[]);//funcion local para printscore
@@ -21,6 +18,5 @@ int get_menu (int i, int j);
 
 
 
-
-
+       
 

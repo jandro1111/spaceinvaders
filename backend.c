@@ -178,7 +178,7 @@ int ciclonaves(void) {//mueva las naves en la matriz
 
 int nav_nod(void) { //spawnea nave nod y mueve nave nod
     static int haynavenod=0;
-    int i, j, num;
+    int i, j;
     int mov = DER;
     for (j = 0; j < ANCHO; ++j) {//me fijo si hay una nave nod en juego
         if (space[0][j] == NAVNOD) {
@@ -284,12 +284,12 @@ coord_t ciclodisp(juego_t *juego, int i, int j) {//mueve los disparos y cambia p
 void verparams(juego_t *juego) {//se fija si pasaste al siguiente nivel y de actualizar las naves q disparan
     int i, j;
     juego->naves = 0; //pongo que hay 0 naves
-    int vacio = 0; //1 si hay naves 0 si no
+//    int vacio = 0; //1 si hay naves 0 si no
     static int prom = 1; //1 si tengo q promover una nave para q dispare
     for (i = 0; i < LARGO; ++i) {
         for (j = 0; j < ANCHO; ++j) {
             if ((space[i][j] >= 1)&&(space[i][j] <= 5)) {//si hay naves
-                vacio = 1; //marco q no incremento el nivel
+//                vacio = 1; //marco q no incremento el nivel
                 juego->naves += 1; //cuento las naves
             }
         }
@@ -315,7 +315,6 @@ void verparams(juego_t *juego) {//se fija si pasaste al siguiente nivel y de act
 
 void navdisp(void) {//determina cuando las naves disparan y cuando aparece la nave nodriza
     int i, j;
-    int haynavenod = 0; //1 para si
     int num = 0; //numero random
     for (i = 0; i < LARGO; ++i) {
         for (j = 0; j < ANCHO; ++j) {
