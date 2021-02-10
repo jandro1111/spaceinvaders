@@ -129,8 +129,9 @@ int main(void) {
             get_disp += (rand() % 6);
         }
         
-        conta = llamo_naves(&componentes, ciclos); //Cuantas veces muevo a los enemigos por ciclo
-        naves = llamo_naves(&componentes, conta); //Cada cuantos ciclos muevo a los enemigos
+        naves = llamo_naves(&componentes, ciclos); //Cada cuantos ciclos muevo a los enemigos
+        conta = naves_por_ciclo(&componentes, naves); //Cuantas veces muevo a los enemigos por ciclo
+        
         
 
         if ((ciclos % naves) == 0) { //Utilizo naves 
@@ -146,7 +147,7 @@ int main(void) {
             found = control_audio(&componentes, &nmadre);
             verparams(&componentes);
         }
-
+        found=1;
 
         rasprint(GAME);
 
@@ -198,7 +199,7 @@ int main(void) {
         if (componentes.vidas == 0 || quit_game == 1) {
             printscore(componentes.puntaje);
             rasprint(MENU);
-            usleep(3);
+            //usleep(3);
             ciclos = 0;
             inigame(&componentes, 1); //inicializa en nivel 1
             random = (rand() % 10) + 21; //numero entre 20 y 30
@@ -236,7 +237,6 @@ int main(void) {
  * 
  *    dcoord_t pos = {DISP_MAX_X >> 1, DISP_MAX_Y >> 1}; //pos es la posición actual, empieza en el centro de la matriz
  *    dcoord_t npos = pos; //npos es la próxima posición
- * 
  * 
  */
 
@@ -323,8 +323,8 @@ int llamo_naves(juego_t* componentes, int ciclos) { //Cada cuantos ciclos llamo 
 
 
         conta = MAX_CICLOS - p; //Conta va a ser un numero del 2 al 5, segun la velocidad que corresponda por nivel
-        if (conta > 1 && p <= 4) {
-            if ((cantidad % 4) || ciclos % 5 == 0) { //Si la cantidad de enemigos que se elimino es multiplo de 4 o se cumplieron
+        if ((conta > 1) && (p <= 4)) {
+            if ((cantidad % 4) || (ciclos % 5 == 0)) { //Si la cantidad de enemigos que se elimino es multiplo de 4 o se cumplieron
                 conta--; // 5, o un multiplo de este, ciclos, se resta en 1 conta
                 p++; // y se aumenta en 1 el nivel
             }
@@ -333,6 +333,7 @@ int llamo_naves(juego_t* componentes, int ciclos) { //Cada cuantos ciclos llamo 
         }
     return conta;
 }
+//////////////////////////////////////////////////
 int naves_por_ciclo(juego_t* componentes, int times){
     int conta = 0;
     int cantidad = MAX_ENEM - componentes->naves; //Cantidad de enemigos eliminados
