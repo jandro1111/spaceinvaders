@@ -381,6 +381,7 @@ void pmov(juego_t* juego) {//movimiento y disparo del jugador
             break;
 
     }
+    juego->mov=0;
 }
 
 /*******************************************************************************
