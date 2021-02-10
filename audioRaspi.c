@@ -18,16 +18,15 @@
 void dummyFun(void);
 void shortDummyFun(void);
 
+#define DISP "disparo.wav"
+#define GAMEOVER "game over.wav"
+#define IMPACT "nave impacto.wav"
+#define NMADRE "ufo_highpitch.wav"
 
     
     //FUNCION PARA EL FRONT
     /* Init Simple-SDL2-Audio */
-    if ( initAudio() == NO_INIT)
-    {
-        fprintf(stderr, "Audio not initilized.\n");
-	endAudio();
-	return -1;
-    }
+    
 
     /* Play music and a sound */
     playMusic(HIGHLANDS, SDL_MIX_MAXVOLUME);    //ESTO ES LO QUE TENEMOS QUE CAMBIAR Y LA FUNCION QUE SE LLAMA DESDE EL FRONT PARA LA MUSICA DE FONDO

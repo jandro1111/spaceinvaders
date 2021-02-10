@@ -1,0 +1,15 @@
+CC = gcc
+FLAGS = -Wall -g -O2
+obj= raspi.o backend.o menu.o disdrv.o termlib.o joydrv.o
+
+space: ${obj}
+    ${CC} ${FLAGS} &{obj} -o test
+
+raspi.o: Raspi.c backend.h menu.h disdrv.h termlib.h joydrv.h
+    ${CC} ${FLAGS} -c Raspi.c -o raspi.o
+
+backend.o: backend.c backend.h
+    ${CC} ${FLAGS} -c backend.c -o backend.o
+
+menu.o: menu.c menu.h
+    ${CC} ${FLAGS} -c menu.c -o menu.o

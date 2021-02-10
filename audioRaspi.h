@@ -9,7 +9,7 @@
 #define AUDIORASPI_H
 
 #include <SDL2/SDL.h>
-#include "audio.h"
+#include "libaudio.h"
 
 #define S2WAIT 180
 
