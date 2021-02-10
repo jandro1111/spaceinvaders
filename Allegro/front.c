@@ -7,7 +7,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_image.h>
 
-//#include"backend.h"
+#include "/home/famolina/Escritorio/spaceinvaders-main/backend.h"
 
 #define STATE_START 0
 #define STATE_MENU  1
@@ -193,19 +193,7 @@ void hud_draw(int vidas, int puntaje, ALLEGRO_FONT * font)
         );
 }
 
-//------------------------
-
-#define CELL_X  (BUFFER_W-ANCHO)/ANCHO
-#define CELL_Y  (BUFFER_H-LARGO)/LARGO
-
-#define ENEMY 1//despues agrego mas tipos de naves
-#define ENEMYSHOT 2//tipos de naves entre 1 a 5 el 2 es el q dispara
-#define NAVNOD 5//siempre se mueve de izq a der, ocupa 2 bloques
-#define PSHOT 7   
-#define ESHOT 6
-#define PLAYER 9
-#define MURO 8
-
+//-------------------------------------
 
 //void cell_draw(int int x, int y)
 /*
@@ -220,7 +208,8 @@ void game_sounds(int n){
             break;
     }
 }
-
+*/
+/*
 void game_draw(int space [LARGO][ANCHO]){
     for(int i = 0; i < LARGO*ANCHO; i++){
         switch(i){
@@ -257,6 +246,11 @@ void game_draw(int space [LARGO][ANCHO]){
 typedef struct GRAPHICS {
     ALLEGRO_BITMAP* menu_background;
     ALLEGRO_BITMAP* game_background;
+    ALLEGRO_BITMAP* enemy_bitmap;
+    ALLEGRO_BITMAP* enemy2_bitmap;
+    ALLEGRO_BITMAP* enemy3_bitmap;
+    ALLEGRO_BITMAP* navnod_bitmap;
+    ALLEGRO_BITMAP* player_bitmap;
 } GRAPHICS;
 
 GRAPHICS graphics;
@@ -269,12 +263,32 @@ void graphics_init()
   
     graphics.game_background = al_load_bitmap("/home/famolina/Escritorio/Recursos/space-invaders-1978-cabinet-artwork-1/invaders.png");
     must_init(graphics.game_background, "game background");
+    
+    graphics.enemy_bitmap = al_load_bitmap("/home/famolina/Escritorio/Recursos/iconsPNG/saucer1a.png");
+    must_init(graphics.enemy_bitmap, "enemy bitmap");
+    
+    graphics.enemy2_bitmap = al_load_bitmap("/home/famolina/Escritorio/Recursos/iconsPNG/saucer1a.png");
+    must_init(graphics.enemy2_bitmap, "enemy 2 bitmap");
+    
+    graphics.enemy3_bitmap = al_load_bitmap("/home/famolina/Escritorio/Recursos/iconsPNG/saucer1a.png");
+    must_init(graphics.enemy3_bitmap, "enemy 3 bitmap");
+    
+    graphics.navnod_bitmap = al_load_bitmap("/home/famolina/Escritorio/Recursos/iconsPNG/mysterya.png");
+    must_init(graphics.navnod_bitmap, "nave nodriza bitmap");
+    
+    graphics.player_bitmap = al_load_bitmap("/home/famolina/Escritorio/Recursos/iconsPNG/baseshipa.png");
+    must_init(graphics.player_bitmap, "player bitmap");
 }
 
 void graphics_deinit()
 {
     al_destroy_bitmap(graphics.menu_background);
     al_destroy_bitmap(graphics.game_background);
+    al_destroy_bitmap(graphics.enemy_bitmap);
+    al_destroy_bitmap(graphics.enemy2_bitmap);
+    al_destroy_bitmap(graphics.enemy3_bitmap);
+    al_destroy_bitmap(graphics.navnod_bitmap);
+    al_destroy_bitmap(graphics.player_bitmap);
 }
 
 //------------------------
@@ -289,8 +303,59 @@ typedef struct BUTTON {
     int keyboard; //flag de posicion sobre boton de menu
 } BUTTON; 
 
+
+juego_t juego;
+coord_t disparo;
+
 #define MOUSE       0
 #define KEYBOARD    1
+
+#define CELL  48
+
+#define STAY    0
+#define RIGHT   1
+#define LEFT    2
+#define SHOOT   3
+#define SHOOT_RIGHT 4
+#define SHOOT_LEFT  5
+
+void move_player(ALLEGRO_EVENT ev){ //no me reconoce dos teclas presionadas al mismo tiempo
+    ALLEGRO_KEYBOARD_STATE estado;  
+    al_get_keyboard_state(&estado);     //prueba con lo que estuve leyendo de internet, sorry si da verguenza jajaj
+    if(al_key_down(&estado, ALLEGRO_KEY_D) && al_key_down(&estado, ALLEGRO_KEY_RIGHT)){
+        juego.mov = SHOOT_RIGHT;
+    }   
+    if(key[ALLEGRO_KEY_D] && key[ALLEGRO_KEY_LEFT]){    //asi es como pensaba implementar 
+        juego.mov = SHOOT_LEFT;
+    }   
+    if(key[ALLEGRO_KEY_D]){
+        juego.mov = SHOOT;
+    }   
+    if(key[ALLEGRO_KEY_RIGHT]){
+        juego.mov = RIGHT;
+        //printf("DERECHA");
+    }
+    if(key[ALLEGRO_KEY_LEFT]){
+        juego.mov = LEFT;
+    }
+    /*else{
+        juego.mov = STAY;
+    }*/
+}
+
+void game_update(ALLEGRO_EVENT ev){
+    move_player(ev);
+    getcoordp(&juego, PLAYER);
+    pmov(&juego);
+    //printf("%d \n", juego.coordsp.j);
+    //printf("%d \n", juego.coordsp.i);
+    
+    getcoordp(&juego, PSHOT);
+    if(juego.coordsp.objeto == PSHOT){
+        ciclodisp(&juego, juego.coordsp.i, juego.coordsp.j);
+        //printf("%d \n", juego.coordsp.objeto);
+    }
+}
 
 int button_update(ALLEGRO_EVENT ev, BUTTON * button){
     if((mouse.x >= button->x && mouse.y >= button->y && mouse.x < (button->x + button->w) && mouse.y < (button->y + button->h))){
@@ -486,7 +551,13 @@ void menu_draw(ALLEGRO_EVENT ev, BUTTON * buttons[]){
             break;
         case(STATE_PLAY):
             al_clear_to_color(al_map_rgb(0,0,0));
+            getcoordp(&juego, PLAYER);
             al_draw_bitmap(graphics.game_background,0,0,0);
+            al_draw_bitmap(graphics.player_bitmap, juego.coordsp.j - CELL/2, juego.coordsp.i - CELL, 0);
+            getcoordp(&juego, PSHOT);
+            if(juego.coordsp.objeto == PSHOT){
+                al_draw_line(juego.coordsp.j, juego.coordsp.i - 5, juego.coordsp.j, juego.coordsp.i + 5, RED, 2);
+            }
             hud_draw(vidas, puntaje, buttons[1][0].font);
             break;
             
@@ -635,7 +706,9 @@ int main(void){
     buttons[1] = buttons_stats;
     buttons[2] = buttons_pause;
     buttons[3] = buttons_start;
+   
     
+    inigame(&juego, 1);
     
     
     //typedef struct BUTTON ARR_BUTTON [];
@@ -678,13 +751,15 @@ int main(void){
                     redraw = true;
                     if(game_states == STATE_EXIT)
                         done = true;
+                    if(game_states == STATE_PLAY)
+                        game_update(event);
                 }
                 break;
             
             case ALLEGRO_EVENT_KEY_DOWN:
                 menu_update(event, buttons);
                 break;
-                      
+                
                 
                 
             
