@@ -39,7 +39,8 @@
 void crear_enemigo(int);
 void crear_muro(void);
 
-
+void movmat (int,int,int);//mueve elementos de la matriz a derecha izquierda arriba o abajo de donde estan
+void playerdisp(int,int,int);//pone el disparo del player
 
 /*******************************************************************************
  * ROM CONST VARIABLES WITH FILE LEVEL SCOPE
