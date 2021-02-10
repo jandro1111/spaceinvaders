@@ -127,7 +127,6 @@ void printnum(int num, int digit[]) {//imprimi un digito en la pos correspondien
 
 void printscore(int puntaje) {//imprime el puntaje
     int num = 0; //aisla digitos para pasar a matriz
-    inimat();
     int auxmat [4]; //para determinar que cols usar degun el digito
     int i;
     for (i = 4; i <= 8; ++i) {
