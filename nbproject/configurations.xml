@@ -21,7 +21,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Allegro_Frontend.c</itemPath>
       <itemPath>Raspi.c</itemPath>
       <itemPath>audioRaspi.c</itemPath>
       <itemPath>backend.c</itemPath>
@@ -50,8 +49,6 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="Allegro_Frontend.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="Raspi.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="audioRaspi.c" ex="false" tool="0" flavor2="0">
@@ -101,8 +98,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Allegro_Frontend.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="Raspi.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="audioRaspi.c" ex="false" tool="0" flavor2="0">

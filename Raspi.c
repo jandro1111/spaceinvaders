@@ -104,6 +104,7 @@ int main(void) {
     srand(time(NULL));
 
 
+    componentes.naves=16;
     jcoord_t coord = {0, 0}; //coordenadas medidas del joystick
 
     //Genero los dos numeros random, para nave madre y disparos enemigos    
@@ -191,6 +192,7 @@ int main(void) {
             random = (rand() % 10) + 21;//numero entre 20 y 30
             get_disp = (rand() % 6);    //numero entre 0 y 5
             rasprint(MENU);
+            componentes.naves=16;
         }
         if (componentes.puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
             componentes.vidas++;
@@ -204,7 +206,7 @@ int main(void) {
             inigame(&componentes, 1); //inicializa en nivel 1
             random = (rand() % 10) + 21; //numero entre 20 y 30
             get_disp = (rand() % 6); //numero entre 0 y 5            
-
+componentes.naves=16;
             while (joy_get_switch() != J_NOPRESS) {
                 quit_game = pause_menu();
                 rasprint(MENU);

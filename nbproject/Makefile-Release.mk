@@ -35,7 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Allegro_Frontend.o \
 	${OBJECTDIR}/Raspi.o \
 	${OBJECTDIR}/audioRaspi.o \
 	${OBJECTDIR}/backend.o \
@@ -66,11 +65,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/Allegro_Frontend.o: Allegro_Frontend.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Allegro_Frontend.o Allegro_Frontend.c
 
 ${OBJECTDIR}/Raspi.o: Raspi.c
 	${MKDIR} -p ${OBJECTDIR}

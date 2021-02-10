@@ -190,6 +190,7 @@ int nav_nod(void) { //spawnea nave nod y mueve nave nod
     if (haynavenod == 0) {//si no hay nave me fijo de spawnear una
         space[0][0] = NAVNOD;
         space[0][1] = NAVNOD;
+        haynavenod=1; //marca que hay nave
     }
     for (i = (LARGO - 2); i >= 0; --i) {
         for (j = (ANCHO - 1); j >= 0; --j) {
