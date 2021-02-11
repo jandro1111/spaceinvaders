@@ -159,6 +159,7 @@ int ciclonaves(void) {//mueva las naves en la matriz
             }
         }
     } else {//tiene q bajar
+        bajar=0;
         mov = ABAJO;
         for (i = (LARGO - 2); i >= 0; --i) {
             for (j = 0; j < ANCHO; ++j) {
@@ -401,7 +402,7 @@ void playerdisp(int i, int j, int disparo) {
     }
 }
 /////////////////////////////////////////////////////////////////////////////////
-#define TESTE
+#define TESTEO
 #ifdef TESTEO
 
 void printmat(void) {//para testeo
