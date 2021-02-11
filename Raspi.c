@@ -138,14 +138,16 @@ int main(void) {
         conta = naves_por_ciclo(&componentes, naves); //Cuantas veces muevo a los enemigos por ciclo
 
         printf("conta= %d\n",conta);
+        printf("naves= %d\n",naves);
 
         if ((ciclos % naves) == 0) { //Utilizo naves 
             for (i = 0; (i <= conta) && (quit_game == 0); i++) { //Mientras que no se haya perdido el juego, llama a la funcion 
                 quit_game = ciclonaves(); // la cantidad de veces que le indique conta
                 rasprint(GAME);
+                usleep(50);
             }
         }
-        usleep(20);
+        
         
         if (ciclos % 2 == 0 && nmadre == 1) { //La nave madre se mueve cada dos movimientos del jugador
             nmadre = nav_nod();
@@ -222,11 +224,11 @@ int main(void) {
             rasprint(GAME);
             sleep(1);
             printf("Aca si\n");
-            while (joy_get_switch() != J_NOPRESS || 1) {
+            while (joy_get_switch() != J_NOPRESS) {
                 quit_game = pause_menu();
                 
                 rasprint(MENU);
-                printf("estoy\n");
+                printf("estoy aca\n");
                 //USLEEP?
 
             }
