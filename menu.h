@@ -94,6 +94,32 @@ numero P={
     { 1, 1, 1, 0},
     { 1, 0, 0, 0}};
 
+numero E={
+    { 1, 1, 1, 0},
+    { 1, 1, 0, 0},
+    { 1, 0, 0, 0},
+    { 1, 1, 1, 0}};
+
+numero N={
+    { 1, 0, 0, 1},
+    { 1, 1, 0, 1},
+    { 1, 0, 1, 1},
+    { 1, 0, 0, 1}};
+
+numero D={
+    { 1, 1, 0, 0},
+    { 1, 0, 1, 0},
+    { 1, 0, 1, 0},
+    { 1, 1, 0, 0}};
+
+numero PLAY={
+    { 1, 0, 0, 0},
+    { 1, 1, 1, 0},
+    { 1, 1, 0, 0},
+    { 1, 0, 0, 0}};
+
+
+
 
 void menu (int opcion);//para raspi printea el menu
 void printscore(int puntaje);//para raspi escribe el puntaje
