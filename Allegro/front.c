@@ -88,16 +88,16 @@ void keyboard_update(ALLEGRO_EVENT* event)
 {
     switch(event->type)
     {
-        case ALLEGRO_EVENT_TIMER:
-            for(int i = 0; i < ALLEGRO_KEY_MAX; i++)
-                key[i] &= KEY_SEEN;
-            break;
-
         case ALLEGRO_EVENT_KEY_DOWN:
             key[event->keyboard.keycode] = KEY_SEEN | KEY_RELEASED;
             break;
         case ALLEGRO_EVENT_KEY_UP:
             key[event->keyboard.keycode] &= KEY_RELEASED;
+            break;
+        case ALLEGRO_EVENT_TIMER:  
+            if(key[ALLEGRO_KEY_RIGHT]) key[ALLEGRO_KEY_RIGHT] &= KEY_SEEN;
+            if(key[ALLEGRO_KEY_LEFT]) key[ALLEGRO_KEY_LEFT] &= KEY_SEEN;
+            if(key[ALLEGRO_KEY_D]) key[ALLEGRO_KEY_D] &= KEY_SEEN;
             break;
     }
 }
@@ -319,31 +319,26 @@ coord_t disparo;
 #define SHOOT_RIGHT 4
 #define SHOOT_LEFT  5
 
-void move_player(ALLEGRO_EVENT ev){ //no me reconoce dos teclas presionadas al mismo tiempo
-    ALLEGRO_KEYBOARD_STATE estado;  
-    al_get_keyboard_state(&estado);     //prueba con lo que estuve leyendo de internet, sorry si da verguenza jajaj
-    if(al_key_down(&estado, ALLEGRO_KEY_D) && al_key_down(&estado, ALLEGRO_KEY_RIGHT)){
+void move_player(ALLEGRO_EVENT ev){ //no me reconoce dos teclas presionadas al mismo tiempo //UPDATE: se soluciono con los else if 
+    if(key[ALLEGRO_KEY_D] && key[ALLEGRO_KEY_RIGHT]){
         juego.mov = SHOOT_RIGHT;
-    }   
-    if(key[ALLEGRO_KEY_D] && key[ALLEGRO_KEY_LEFT]){    //asi es como pensaba implementar 
+    }  
+    else if(key[ALLEGRO_KEY_D] && key[ALLEGRO_KEY_LEFT]){
         juego.mov = SHOOT_LEFT;
-    }   
-    if(key[ALLEGRO_KEY_D]){
+    }  
+    else if(key[ALLEGRO_KEY_D]){
         juego.mov = SHOOT;
     }   
-    if(key[ALLEGRO_KEY_RIGHT]){
+    else if(key[ALLEGRO_KEY_RIGHT]){
         juego.mov = RIGHT;
-        //printf("DERECHA");
     }
-    if(key[ALLEGRO_KEY_LEFT]){
+    else if(key[ALLEGRO_KEY_LEFT]){
         juego.mov = LEFT;
     }
-    /*else{
-        juego.mov = STAY;
-    }*/
 }
 
 void game_update(ALLEGRO_EVENT ev){
+    keyboard_update(&ev);
     move_player(ev);
     getcoordp(&juego, PLAYER);
     pmov(&juego);
@@ -557,6 +552,7 @@ void menu_draw(ALLEGRO_EVENT ev, BUTTON * buttons[]){
             getcoordp(&juego, PSHOT);
             if(juego.coordsp.objeto == PSHOT){
                 al_draw_line(juego.coordsp.j, juego.coordsp.i - 5, juego.coordsp.j, juego.coordsp.i + 5, RED, 2);
+                al_play_sample(shot_sound, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             hud_draw(vidas, puntaje, buttons[1][0].font);
             break;
