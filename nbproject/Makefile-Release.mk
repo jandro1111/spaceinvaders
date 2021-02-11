@@ -36,9 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Raspi.o \
-	${OBJECTDIR}/audioRaspi.o \
 	${OBJECTDIR}/backend.o \
-	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/menu.o
 
 
@@ -71,20 +69,10 @@ ${OBJECTDIR}/Raspi.o: Raspi.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Raspi.o Raspi.c
 
-${OBJECTDIR}/audioRaspi.o: audioRaspi.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/audioRaspi.o audioRaspi.c
-
 ${OBJECTDIR}/backend.o: backend.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/backend.o backend.c
-
-${OBJECTDIR}/main.o: main.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 ${OBJECTDIR}/menu.o: menu.c
 	${MKDIR} -p ${OBJECTDIR}

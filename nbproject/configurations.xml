@@ -7,7 +7,6 @@
       <itemPath>audioRaspi.h</itemPath>
       <itemPath>backend.h</itemPath>
       <itemPath>menu.h</itemPath>
-      <itemPath>raspi.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -22,9 +21,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>Raspi.c</itemPath>
-      <itemPath>audioRaspi.c</itemPath>
       <itemPath>backend.c</itemPath>
-      <itemPath>main.c</itemPath>
       <itemPath>menu.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -43,15 +40,32 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/usr/local/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>RASPI</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
+        </cTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerOptionItem>`pkg-config --libs sdl`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs sdl2`</linkerOptionItem>
+          </linkerLibItems>
+          <commandLine>disdrv.o joydrv.o termlib.o</commandLine>
+        </linkerTool>
       </compileType>
       <item path="Raspi.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="audioRaspi.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="audioRaspi.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -63,15 +77,11 @@
       </item>
       <item path="game over.wav" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="menu.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="nave impacto.wav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="raspi.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shoot.wav" ex="false" tool="3" flavor2="0">
       </item>
@@ -100,8 +110,6 @@
       </compileType>
       <item path="Raspi.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="audioRaspi.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="audioRaspi.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="backend.c" ex="false" tool="0" flavor2="0">
@@ -112,15 +120,11 @@
       </item>
       <item path="game over.wav" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="menu.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="menu.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="nave impacto.wav" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="raspi.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="shoot.wav" ex="false" tool="3" flavor2="0">
       </item>

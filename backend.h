@@ -22,7 +22,7 @@ extern "C" {
 #define LARGO 16 //el largo de la matriz
 #define ANCHO 16
 #define SEPARACION 4 // Separacion entre enemigos por fila en raspi
-#else 
+#elif ALLEGRO 
 #define LARGO 98 //el largo de la matriz
 #define ANCHO 49
 #define SEPARACION 9 // Separacion entre enemegios por fila para allegro

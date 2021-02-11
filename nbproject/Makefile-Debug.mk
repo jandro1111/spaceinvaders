@@ -36,9 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Raspi.o \
-	${OBJECTDIR}/audioRaspi.o \
 	${OBJECTDIR}/backend.o \
-	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/menu.o
 
 
@@ -56,7 +54,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/local/lib `pkg-config --libs sdl` `pkg-config --libs sdl2`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -64,32 +62,22 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/spaceinvaders ${OBJECTFILES} ${LDLIBSOPTIONS} disdrv.o joydrv.o termlib.o
 
 ${OBJECTDIR}/Raspi.o: Raspi.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Raspi.o Raspi.c
-
-${OBJECTDIR}/audioRaspi.o: audioRaspi.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/audioRaspi.o audioRaspi.c
+	$(COMPILE.c) -g -Wall -DRASPI -I/usr/local/include `pkg-config --cflags sdl` `pkg-config --cflags sdl2`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Raspi.o Raspi.c
 
 ${OBJECTDIR}/backend.o: backend.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/backend.o backend.c
-
-${OBJECTDIR}/main.o: main.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -Wall -DRASPI -I/usr/local/include `pkg-config --cflags sdl` `pkg-config --cflags sdl2`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/backend.o backend.c
 
 ${OBJECTDIR}/menu.o: menu.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/menu.o menu.c
+	$(COMPILE.c) -g -Wall -DRASPI -I/usr/local/include `pkg-config --cflags sdl` `pkg-config --cflags sdl2`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/menu.o menu.c
 
 # Subprojects
 .build-subprojects:

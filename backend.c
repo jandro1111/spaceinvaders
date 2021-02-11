@@ -173,6 +173,7 @@ int ciclonaves(void) {//mueva las naves en la matriz
                 exit = 1; //marco salir
             }
         }
+        bajar=0;
     }
     return exit;
 }
@@ -220,6 +221,7 @@ coord_t ciclodisp(juego_t *juego, int i, int j) {//mueve los disparos y cambia p
     }
     evento.i = i;
     evento.j = j;
+    
     if (space[i][j] == ESHOT) {//si hay un disparo enemigo
         mov = ABAJO;
         if (i == (LARGO - 1)) {//si estoy en la ultima fila lo desaparezco

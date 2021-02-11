@@ -60,7 +60,7 @@ int llamo_naves(juego_t* componentes, int ciclos);
 int naves_por_ciclo(juego_t* componentes, int times);
 
 ////////////// CONTROL_AUDIO ////////////////
-int control_audio(juego_t * componentes, int* nmadre);
+void control_audio(juego_t * componentes, int* nmadre);
 //Comprueba si hubo una colision y reproduce el audio correspondiente
 
 /*
@@ -93,9 +93,9 @@ int main(void) {
     juego_t componentes;
     inigame(&componentes, 1); //Mando el nivel 1, ver si hay que elegir nivel
     getcoordp(&componentes); //Ubica la posicion del jugador  
-    
+
     //Creo e inicializo las variables a utilizar
-    int i, conta = 0, ciclos = 1, found = 1;
+    int i, conta = 0, ciclos = 1;
     int quit_game = 0;
     int nmadre = 0;
     int random;
@@ -104,7 +104,7 @@ int main(void) {
     srand(time(NULL));
 
 
-    componentes.naves=16;
+    componentes.naves = 16;
     jcoord_t coord = {0, 0}; //coordenadas medidas del joystick
 
     //Genero los dos numeros random, para nave madre y disparos enemigos    
@@ -119,6 +119,10 @@ int main(void) {
             //ACA QUIERO HACER QUE PARPADEE UN PAR DE VECES PARA QUE QUEDE LINDO NOMAS
         }
 
+        coord = joy_get_coord(); //Guarda las coordenadas medidas
+        
+       // printf("x= %c y= %c\n",coord.x,coord.y);
+        
         if (random == ciclos) { //Una vez que la cantidad de ciclos 
             nmadre = 1; //Marco que tengo que crear una nave madre
             random += (rand() % 10) + 21; //Sumo un numero entre 20 y 30 al anterior
@@ -129,30 +133,35 @@ int main(void) {
             navdisp();
             get_disp += (rand() % 6);
         }
-        
+
         naves = llamo_naves(&componentes, ciclos); //Cada cuantos ciclos muevo a los enemigos
         conta = naves_por_ciclo(&componentes, naves); //Cuantas veces muevo a los enemigos por ciclo
-        
-        
+
+        printf("conta= %d\n",conta);
 
         if ((ciclos % naves) == 0) { //Utilizo naves 
             for (i = 0; (i <= conta) && (quit_game == 0); i++) { //Mientras que no se haya perdido el juego, llama a la funcion 
                 quit_game = ciclonaves(); // la cantidad de veces que le indique conta
+                rasprint(GAME);
             }
         }
+        usleep(20);
+        
         if (ciclos % 2 == 0 && nmadre == 1) { //La nave madre se mueve cada dos movimientos del jugador
             nmadre = nav_nod();
         }
 
-        while (found != 0) {
-            found = control_audio(&componentes, &nmadre);
-            verparams(&componentes);
-        }
-        found=1;
+
+        control_audio(&componentes, &nmadre);
+        verparams(&componentes);
+        control_audio(&componentes, &nmadre);
+        verparams(&componentes);
+
+        usleep(15);
 
         rasprint(GAME);
 
-        coord = joy_get_coord(); //Guarda las coordenadas medidas
+//        coord = joy_get_coord(); //Guarda las coordenadas medidas
         if (joy_get_switch() == J_NOPRESS) {
             while (joy_get_switch() != J_NOPRESS) {
                 quit_game = pause_menu();
@@ -161,59 +170,67 @@ int main(void) {
             }
         } else {
             //MOVIMIENTOS DEL JUGADOR
-            if (coord.x > THRESHOLD) {      //Dereceha 
-                if (coord.y > THRESHOLD) {  // y arriba
-                    componentes.mov = 4;    // me muevo a la derecha y disparo
-                    pmov(&componentes);     //Llamo a la funcion que realiza el movimiento
+            if (coord.x > THRESHOLD) { //Dereceha 
+                if (coord.y > THRESHOLD) { // y arriba
+                    componentes.mov = 4; // me muevo a la derecha y disparo
+                    pmov(&componentes); //Llamo a la funcion que realiza el movimiento
                 } else {
-                    componentes.mov = 1;    //No se marco arriba, no dispara
+                    componentes.mov = 1; //No se marco arriba, no dispara
                     pmov(&componentes);
                 }
-            } else if (coord.x < -THRESHOLD) {  //Izquierda
-                if (coord.y > THRESHOLD) {      // y arriba, dispara y se mueve
+            } else if (coord.x < -THRESHOLD) { //Izquierda
+                if (coord.y > THRESHOLD) { // y arriba, dispara y se mueve
                     componentes.mov = 5;
                     pmov(&componentes);
                 } else {
-                    componentes.mov = 2;        //No dispara
+                    componentes.mov = 2; //No dispara
                     pmov(&componentes);
                 }
-            } else if (coord.y > THRESHOLD) {   //Solo arriba, solo dispara
+            } else if (coord.y > THRESHOLD) { //Solo arriba, solo dispara
                 componentes.mov = 3;
                 pmov(&componentes);
             }
         }
         ciclos++;
         rasprint(GAME); //Imprimo el juego
+        usleep(200);
 
-        if (componentes.naves == 0) {   //Si ya no hay naves
-            componentes.nivel++;        //Aumento de nivel    
-            ciclos = 0;                 //Reinicio los ciclos
-            matniv();                   //Mando a imprimir LV UP
-            random = (rand() % 10) + 21;//numero entre 20 y 30
-            get_disp = (rand() % 6);    //numero entre 0 y 5
+        if (componentes.naves == 0) { //Si ya no hay naves
+            componentes.nivel++; //Aumento de nivel    
+            ciclos = 0; //Reinicio los ciclos
+            matniv(); //Mando a imprimir LV UP
+            random = (rand() % 10) + 21; //numero entre 20 y 30
+            get_disp = (rand() % 6); //numero entre 0 y 5
             rasprint(MENU);
-            componentes.naves=16;
+            componentes.naves = 16;
+            sleep(1);
         }
         if (componentes.puntaje >= 1000) {//si tengo mas de 1000 puntos gano 1 vida y vuelvo el puntaje a 0
             componentes.vidas++;
             componentes.puntaje = 0;
+            sleep(1);
         }
         if (componentes.vidas == 0 || quit_game == 1) {
             printscore(componentes.puntaje);
             rasprint(MENU);
-            //usleep(3);
+            sleep(1);
             ciclos = 0;
             inigame(&componentes, 1); //inicializa en nivel 1
             random = (rand() % 10) + 21; //numero entre 20 y 30
             get_disp = (rand() % 6); //numero entre 0 y 5            
-componentes.naves=16;
-            while (joy_get_switch() != J_NOPRESS) {
+            componentes.naves = 16;
+            rasprint(GAME);
+            sleep(1);
+            printf("Aca si\n");
+            while (joy_get_switch() != J_NOPRESS || 1) {
                 quit_game = pause_menu();
+                
                 rasprint(MENU);
+                printf("estoy\n");
                 //USLEEP?
 
             }
-            
+
         }
     }
     /*
@@ -300,7 +317,7 @@ int pause_menu(void) {
     jcoord_t coord = {0, 0}; //Coordenadas medidas del joystick
     coord = joy_get_coord(); //Guarda las coordenadas medidas
     int quit_game = 0;
-    int opcion;
+    int opcion=JUGAR;
     if (coord.y > THRESHOLD) { //Si va hacia arriba 
         opcion = JUGAR; // selecciona la opcion JUGAR
         menu(opcion); // lo mando al menu
@@ -324,27 +341,28 @@ int llamo_naves(juego_t* componentes, int ciclos) { //Cada cuantos ciclos llamo 
     (componentes->nivel >= 4) ? p = 4 : (p = componentes->naves);
 
 
-        conta = MAX_CICLOS - p; //Conta va a ser un numero del 2 al 5, segun la velocidad que corresponda por nivel
-        if ((conta > 1) && (p <= 4)) {
-            if ((cantidad % 4) || (ciclos % 5 == 0)) { //Si la cantidad de enemigos que se elimino es multiplo de 4 o se cumplieron
-                conta--; // 5, o un multiplo de este, ciclos, se resta en 1 conta
-                p++; // y se aumenta en 1 el nivel
-            }
-        } else { //Caso contrario, se considera que conta es 1
-            conta = 1;
+    conta = MAX_CICLOS - p; //Conta va a ser un numero del 2 al 5, segun la velocidad que corresponda por nivel
+    if ((conta > 1) && (p <= 4)) {
+        if ((cantidad % 4) || (ciclos % 5 == 0)) { //Si la cantidad de enemigos que se elimino es multiplo de 4 o se cumplieron
+            conta--; // 5, o un multiplo de este, ciclos, se resta en 1 conta
+            p++; // y se aumenta en 1 el nivel
         }
+    } else { //Caso contrario, se considera que conta es 1
+        conta = 1;
+    }
     return conta;
 }
 //////////////////////////////////////////////////
-int naves_por_ciclo(juego_t* componentes, int times){
+
+int naves_por_ciclo(juego_t* componentes, int times) {
     int conta = 0;
     int cantidad = MAX_ENEM - componentes->naves; //Cantidad de enemigos eliminados
 
     if (times > 1) { //Si todavia times tiene un valor mayor a uno, 
-            conta = 1; // le va a devolver el contador en 1
-        } else {
-            conta = ((cantidad / 4) + 1); //Caso contrario, devuelve un numero del 1 al 4
-        }
+        conta = 1; // le va a devolver el contador en 1
+    } else {
+        conta = ((cantidad / 4) + 1); //Caso contrario, devuelve un numero del 1 al 4
+    }
     return conta;
 }
 
@@ -352,10 +370,8 @@ int naves_por_ciclo(juego_t* componentes, int times){
 
 //////////////// CONTROL_AUDIO /////////////////
 
-int control_audio(juego_t * componentes, int* nmadre) {
-    int found = 1;
+void control_audio(juego_t * componentes, int* nmadre) {
     int i, j;
-
     coord_t evento;
     for (i = 0; i < LARGO; i++) {
         for (j = 0; j < ANCHO; j++) {
@@ -370,11 +386,7 @@ int control_audio(juego_t * componentes, int* nmadre) {
                 //audio 3
             } else if (evento.objeto == ESCUDO) {
 
-            } else {
-                found = 0;
             }
         }
     }
-
-    return found;
 }
