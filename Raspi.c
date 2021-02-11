@@ -137,10 +137,12 @@ int main(void) {
 
         //GENERADOR DE DISPAROS ENEMIGOS
 
-        if (ciclos == get_disp) { //Funciona igual a nave madre pero llama a la funcion que los inicia 
-            navdisp();
-            get_disp += (rand() % 4);
-        }
+//        if (ciclos == get_disp) { //Funciona igual a nave madre pero llama a la funcion que los inicia 
+//            navdisp();
+//            get_disp += (rand() % 4);
+//        }
+//        
+        navdisp();
         
         //MOVIMIENTO NAVES ENEMIGAS
 
@@ -211,7 +213,7 @@ int main(void) {
         }
         ciclos++;
         rasprint(GAME); //Imprimo el juego
-        usleep(200);
+        usleep(400);
 
         if (componentes.naves == 0) { //Si ya no hay naves
             componentes.nivel++; //Aumento de nivel    
@@ -241,8 +243,8 @@ int main(void) {
             sleep(2);
             
             while (joy_get_switch() == J_NOPRESS) {
-                quit_game = pause_menu();
                 
+                quit_game = pause_menu();
                 rasprint(MENU);
                 usleep(200);
             }
