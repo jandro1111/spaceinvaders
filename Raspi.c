@@ -110,8 +110,8 @@ int main(void) {
 
     //Genero los dos numeros random, para nave madre y disparos enemigos    
     random = (rand() % 10) + 21; //numero entre 20 y 30
-    get_disp = (rand() % 6); //numero entre 0 y 5
-    joy_update();
+    get_disp = (rand() % 4); //numero entre 0 y 5
+    
     
     while (quit_game != 1) { //Mientras no sse decida salir del juego
 
@@ -119,24 +119,30 @@ int main(void) {
         {
             ininiv(componentes.nivel); //Inicializo el nivel
             getcoordp(&componentes);
+            disp_clear();
+            usleep(100);
+            rasprint(GAME);
             //ACA QUIERO HACER QUE PARPADEE UN PAR DE VECES PARA QUE QUEDE LINDO NOMAS
         }
 
-        joy_update();
-        coord = joy_get_coord(); //Guarda las coordenadas medidas
         
-        printf("x= %c y= %c\n",coord.x,coord.y);
+        printf("x= %4d y= %4d\n",coord.x,coord.y);
+        
+        //GENERADOR DE NAVE MADRE
         
         if (random == ciclos) { //Una vez que la cantidad de ciclos 
             nmadre = 1; //Marco que tengo que crear una nave madre
             random += (rand() % 10) + 21; //Sumo un numero entre 20 y 30 al anterior
         }
 
+        //GENERADOR DE DISPAROS ENEMIGOS
 
         if (ciclos == get_disp) { //Funciona igual a nave madre pero llama a la funcion que los inicia 
             navdisp();
-            get_disp += (rand() % 6);
+            get_disp += (rand() % 4);
         }
+        
+        //MOVIMIENTO NAVES ENEMIGAS
 
         naves = llamo_naves(&componentes, ciclos); //Cada cuantos ciclos muevo a los enemigos
         conta = naves_por_ciclo(&componentes, naves); //Cuantas veces muevo a los enemigos por ciclo
@@ -153,12 +159,13 @@ int main(void) {
             }
         }
         
+        //MOVIMIENTO NAVE MADRE
         
         if (ciclos % 2 == 0 && nmadre == 1) { //La nave madre se mueve cada dos movimientos del jugador
             nmadre = nav_nod();
         }
 
-
+        //MOVIMIENTOS BALAS
         control_audio(&componentes, &nmadre);
         verparams(&componentes);
         control_audio(&componentes, &nmadre);
@@ -168,6 +175,10 @@ int main(void) {
 
         rasprint(GAME);
 
+        //MOVIMIENTOS JUGADOR
+        joy_update();
+        coord = joy_get_coord(); //Guarda las coordenadas medidas
+        
 //        coord = joy_get_coord(); //Guarda las coordenadas medidas
         if (joy_get_switch() != J_NOPRESS) {
             while (joy_get_switch() == J_NOPRESS) {
@@ -320,6 +331,7 @@ void rasprint(int matriz) { //es el printmat para raspi
 
 int pause_menu(void) {
     jcoord_t coord = {0, 0}; //Coordenadas medidas del joystick
+    joy_update();
     coord = joy_get_coord(); //Guarda las coordenadas medidas
     int quit_game = 0;
     int opcion=JUGAR;
